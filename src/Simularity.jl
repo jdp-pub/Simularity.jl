@@ -1,4 +1,4 @@
-module alg_tk
+module Simularity
 
 #=
 ~~ matrix solvers
@@ -34,4 +34,6 @@ vec_compare(vector of functions, length of random vectors as input, number of ru
 
 =#
 include("compare.jl")
+
+include("matrices.jl")
 end

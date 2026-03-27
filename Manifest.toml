@@ -2,7 +2,7 @@
 
 julia_version = "1.12.5"
 manifest_format = "2.0"
-project_hash = "11c6bb57b7f43e60b1df218dd73d62bb45b52e80"
+project_hash = "4fdafacde8ac0d74166f09f0252eba416dff3e29"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -105,6 +105,12 @@ version = "0.7.0"
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 version = "1.11.0"
 
+[[deps.Simularity]]
+deps = ["BenchmarkTools", "LinearAlgebra", "SparseArrays"]
+path = "."
+uuid = "70afd6a5-1acf-4b53-88b6-7a68762e86fa"
+version = "0.1.0-DEV"
+
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
@@ -158,12 +164,6 @@ version = "1.11.0"
 [[deps.Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 version = "1.11.0"
-
-[[deps.alg_tk]]
-deps = ["LinearAlgebra", "SparseArrays"]
-path = "."
-uuid = "70afd6a5-1acf-4b53-88b6-7a68762e86fa"
-version = "1.0.0-DEV"
 
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]

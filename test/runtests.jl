@@ -1,7 +1,7 @@
-include("alg_tk.jl")
+include("Simularity.jl")
 using Test
 
-@testset "alg_tk.jl" begin
+@testset "Simularity.jl" begin
     #### Matrix solvers
     
     #### Array sorts
