@@ -1,8 +1,7 @@
-#######
-#=
-GENERAL UTILITIES JULIA - Author: Jacob Donovan Purcell
-some functions showcasing algorithms in julia
+module alg_tk
 
+########
+#=
 METHODS   
 ~~ matrix solvers
 power_iteration(matrix, complex initial guess vector, number of iterations)
@@ -149,3 +148,4 @@ function qr_decomp(A,k::Int=size(A,2))
    return Q,R
 end
 
+end
