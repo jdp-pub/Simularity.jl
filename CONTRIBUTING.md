@@ -10,7 +10,7 @@ stable - current release
 
 staging - next release, stable code
 
-\<contributor username\>_working - unstable workspace, make this and use it. whenever recent changes are complete sync with staging branch.
+\<feature\>_working - unstable workspace, make this when nonexistent. whenever recent changes are complete sync with staging branch.
 
 ## Checklist before staging
 
