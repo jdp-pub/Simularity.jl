@@ -1,23 +1,27 @@
 using LinearAlgebra
 using SparseArrays
 
-function power_iteration(A,x::Array{ComplexF64}=complex.(rand(Float64,size(A,1))),k::Int=11)
-    # returns dominant unit eigenvector and eigenvalue of A
+function power_iteration(A,x::Array{ComplexF64}=complex.(rand(Float64,size(A,1))),k=1E3,vtol=1E-6)
+    # returns dominant unit eigenvector and eigenvalue (largest abs value) of A
     # A can be complex
     # x initial is a real vector
     # returns complex eigenvalue and eigenvector
     
+    # best suited for a getting single approximate vector quickly
+    
     # get the action of A
-    for kx in 1:k
-        # eigenvector
+    kx = 0
+    xtemp = x*2
+    while !((isapprox(abs(x[1]),abs(xtemp[1]),atol=vtol)&&isapprox(abs(x[2]),abs(xtemp[2]),atol=vtol)) || kx==k)
+        xtemp = x
         x = normalize(A*x)
-        display(x)
+        kx = kx+1
     end
-
+    println(k)
     # rayleigh quotient
     # eigenevalue
     l = dot(A*x,x)/dot(x,x)
-
+    println(l)
     return l, x
 end
 

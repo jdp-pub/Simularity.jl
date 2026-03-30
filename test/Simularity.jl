@@ -1,20 +1,5 @@
 module Simularity
 
-#=
-~~ matrix solvers
-arnoldi(square matrix, length of side of output, matrix)
-    returns upper hessenberg matrix, krylov vectors, gs eigenvalue 
-
-gs(matrix, guess vector, variational tolerance)
-    returns smallest real eigenvalue and corresponding eigencevtor to accuracy vtol
-
-lanczos(symmetric matrix, length of side of output matrix)
-    returns tridiagonal matrix, krylov vectors, gs eigenvalue 
-
-power_iteration(matrix, complex initial guess vector, number of iterations)
-    returns dominant eigenvalue, eigenvector
-=#
-include("matrix_solvers.jl")
 
 #=
 ~~ array sorts
@@ -35,5 +20,24 @@ vec_compare(vector of functions, length of random vectors as input, number of ru
 =#
 include("compare.jl")
 
+include("diffeq_solvers.jl")
+
 include("matrices.jl")
+
+#=
+~~ matrix solvers
+arnoldi(square matrix, length of side of output, matrix)
+    returns upper hessenberg matrix, krylov vectors, gs eigenvalue 
+
+gs(matrix, guess vector, variational tolerance)
+    returns smallest real eigenvalue and corresponding eigencevtor to accuracy vtol
+
+lanczos(symmetric matrix, length of side of output matrix)
+    returns tridiagonal matrix, krylov vectors, gs eigenvalue 
+
+power_iteration(matrix, complex initial guess vector, number of iterations)
+    returns dominant eigenvalue, eigenvector
+=#
+include("matrix_solvers.jl")
+
 end
