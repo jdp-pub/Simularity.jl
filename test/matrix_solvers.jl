@@ -1,27 +1,43 @@
 using LinearAlgebra
 using SparseArrays
 
-function power_iteration(A,x::Array{ComplexF64}=complex.(rand(Float64,size(A,1))),k=1E3,vtol=1E-6)
-    # returns dominant unit eigenvector and eigenvalue (largest abs value) of A
-    # A can be complex
-    # x initial is a real vector
-    # returns complex eigenvalue and eigenvector
-    
-    # best suited for a getting single approximate vector quickly
-    
-    # get the action of A
+"""
+    power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int64=100,vtol::Float64=1E-6)
+
+# Arguments
+- `A::AbstractMatrix{<:Number}`: The matrix to be examined.
+- `x::AbstractVector{<:Number}`: Guess for eigenvector, helps with convergence.
+- `k::Int64`: Maximum iterations for convergence
+- `vtol::Float64`: Convergence tolerance. 
+
+
+# Return 
+Largest magnitude complex eigenvalue with its unit eigenvector of A.
+
+# Notes
+This is a stochastic method unless an initial guess is supplied. 
+Best suited for a getting single eigen value/vector quickly.
+
+# Examples
+```julia
+
+
+```
+"""
+function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int64=100,vtol::Float64=1E-6)
     kx = 0
-    xtemp = x*2
-    while !((isapprox(abs(x[1]),abs(xtemp[1]),atol=vtol)&&isapprox(abs(x[2]),abs(xtemp[2]),atol=vtol)) || kx==k)
+    xtemp = x*2 # guarantees loop entry, anything else has a probability that xtemp = x
+    dottemp = NaN 
+    while !(isapprox(dot(x,xtemp),dottemp,atol=vtol) || kx==k)
+        dottemp = dot(x,xtemp)
         xtemp = x
-        x = normalize(A*x)
+        x = normalize(A*x) # action of A on x
         kx = kx+1
     end
-    println(k)
+
     # rayleigh quotient
     # eigenevalue
     l = dot(A*x,x)/dot(x,x)
-    println(l)
     return l, x
 end
 
