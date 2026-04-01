@@ -15,8 +15,13 @@ staging - next release, stable code
 ## Checklist before staging
 
 - unit tests
+- functions are arranged in lexicographical order per file
 - [complete code documentation](https://docs.julialang.org/en/v1/manual/documentation/)
 - update documentation pages (TBA)
+
+[julia style guide](https://docs.julialang.org/en/v1/manual/style-guide/#Write-functions,-not-just-scripts)
+
+[performance tips](https://docs.julialang.org/en/v1/manual/performance-tips/)
 
 <!--
 template items, will be incorporated if theres any interest in the project
