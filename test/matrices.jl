@@ -1,4 +1,14 @@
 
+diag(A::AbstractMatrix{<:Number}) = [A[xn,xn] for xn in 1:min(size(A))]
+
+function I(n::Int=2)
+    In = zeros(n,n)
+    for ix in 1:n
+        In[ix,ix] = 1
+    end
+    return In
+end
+
 function MBO(Ol,pos,l)
     # many body operator
     # pos and Ol should be sorted by index previously
@@ -20,3 +30,19 @@ function MBO(Ol,pos,l)
     end
     return O
 end
+
+function lpnorm(A,L::Int=2)
+    if L == 1
+
+    elseif L == 2
+        return sqrt(sum(A.*A))
+
+
+    elseif L == 3
+
+    end
+end
+
+
+normalize(x::AbstractVector{<:Number},L::Int=2) = x/lpnorm(x,L)
+

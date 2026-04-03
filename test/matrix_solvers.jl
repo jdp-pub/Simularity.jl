@@ -1,34 +1,23 @@
-using LinearAlgebra
-using SparseArrays
 
 """
+    arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
 
 # Arguments
-- ``
-- ``
-- ``
-- ``
-
+- `A::AbstractMatrix{<:Number}`: The matrix of interest.
+- `k::Int`: The number of eigenvectors to consider in the subspace. 
 
 # Return 
+Upper Hessenberg form of A and the eivenvectors. 
 
-# Notes
+# Description
+Useful for non-Hermitian and Hermitian matrices.
 
-# Examples
-```julia
-
-
-```
 """
-function arnoldi(A,k::Int=size(A,2))
-    # works with nonsymmetric matrices, 
-    # approximates the upper hessenberg form
-    # of A
-
-    # ground state eigenvalue, eigenvector
+function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    # begin with ground state eigenvalue, eigenvector
     E,p = gs(A)
     v = []
-    h = spzeros(k,k)
+    h = zeros(k,k)
     q = [p]
 
     # build nonsymmetric krylov space
@@ -43,62 +32,35 @@ function arnoldi(A,k::Int=size(A,2))
             push!(q,normalize(v))
         end
     end
+
     # eigenvectors
     q = reduce(hcat,q)
 
-    return h,q,E
+    return h,q
 end
 
-"""
-
-# Arguments
-- ``
-- ``
-- ``
-- ``
+function eig_vals(A::AbstractMatrix{<:Number},mode::String="qr",k::Int=20,vtol::Number=1E-8)
 
 
-# Return 
+    if mode == qr
 
-# Notes
+        Q,R = qr_decomp(A)
+        Atemp = Q'*R
+        Ao = Atemp*2
+        kx = 0
 
-# Examples
-```julia
-
-
-```
-"""
-function lanczos(A,k::Int=size(A,2))
-    # approximates the tridiagonal form and 
-    # eigenvectors of a hermitian matrix A. 
-
-    # ground state
-    E,p = gs(A)
-
-    # krylov space for symmextric matrix
-    # q columns are krylov subspace vectors
-    q = [p]
-    v = []
-    h = spzeros(k,k)
-    for kx in 1:k
-        v = A*q[kx]
-        h[kx,kx] = real(q[kx]'*v)
-        if kx == 1
-            v = v - h[kx,kx]*q[kx]
-        else
-            v = v - h[kx,kx]*q[kx] - h[kx,kx-1]*q[kx-1]
+        while !(isapprox(Ao,Atemp,atol=vtol) || kx==k)
+            Atemp = Ao
+            Ao = R'*Q
+            Q,R = qr_decomp(Ao)
+            println(Atemp)
+            println(Ao)
+            kx = kx+1
         end
 
-        if kx != k
-            h[kx,kx+1] = norm(v)
-            h[kx+1,kx] = norm(v)
-            push!(q,normalize(v))
-        end
+        return diag(Ao)
+
     end
-    #eigenvectors
-    q = reduce(hcat,q)
-
-    return h,q,E
 end
 
 """
@@ -112,15 +74,11 @@ end
 
 # Return 
 
-# Notes
-
-# Examples
-```julia
+# Description
 
 
-```
 """
-function gs(A,x::Array{ComplexF64}=complex.(rand(Float64,size(A,1))),vtol=1E-8)
+function gs(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
     #findes the smallest eigenvalue and eigenvector 
     #using the variational method
 
@@ -143,29 +101,69 @@ function gs(A,x::Array{ComplexF64}=complex.(rand(Float64,size(A,1))),vtol=1E-8)
 end
 
 """
-    power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int64=100,vtol::Float64=1E-6)
+    lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+
+# Arguments
+- `A::AbstractMatrix{<:Number}`: The matrix of interest.
+- `k::Int`: The number of eigenvectors to consider in the subspace. 
+
+# Return 
+Tridiagonal form of A and the eigenvectors.
+
+# Description
+Useful for hermitian matrices, faster than other methods in the valid case. 
+
+"""
+function lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    # begin with ground state
+    E,p = gs(A)
+
+    # krylov space for symmextric matrix
+    # q columns are krylov subspace vectors
+    q = [p]
+    v = []
+    h = zeros(k,k)
+    for kx in 1:k
+        v = A*q[kx]
+        h[kx,kx] = real(q[kx]'*v)
+        if kx == 1
+            v = v - h[kx,kx]*q[kx]
+        else
+            v = v - h[kx,kx]*q[kx] - h[kx,kx-1]*q[kx-1]
+        end
+
+        if kx != k
+            h[kx,kx+1] = norm(v)
+            h[kx+1,kx] = norm(v)
+            push!(q,normalize(v))
+        end
+    end
+    #eigenvectors
+    q = reduce(hcat,q)
+
+    return h,q
+end
+
+"""
+    power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
 
 # Arguments
 - `A::AbstractMatrix{<:Number}`: The matrix to be examined.
 - `x::AbstractVector{<:Number}`: Guess for eigenvector, helps with convergence.
-- `k::Int64`: Maximum iterations for convergence
-- `vtol::Float64`: Convergence tolerance. 
+- `k::Int`: Maximum iterations for convergence
+- `vtol::Float`: Convergence tolerance. 
 
 
 # Return 
 Largest magnitude complex eigenvalue with its unit eigenvector of A.
 
-# Notes
+# Description
 This is a stochastic method unless an initial guess is supplied. 
 Best suited for a getting single eigen value/vector quickly.
 
-# Examples
-```julia
 
-
-```
 """
-function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int64=100,vtol::Float64=1E-6)
+function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
     kx = 0
     xtemp = x
     dottemp = NaN 
@@ -183,40 +181,40 @@ function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}
 end
 
 """
+    qr_decomp(A::AbstractMatrix{<:Number},k::Int=size(A,2))
 
 # Arguments
-- ``
-- ``
-- ``
-- ``
-
+- `A::AbstractMatrix{<:Number}`: An invertible square matrix.
+- `k::Int`: The number of eigenvectors to consider.
 
 # Return 
+A unitary matrix and an upper triangular matrix.
 
-# Notes
+# Description
+QR decomposition. Useful for performing higher level operations.
 
-# Examples
-```julia
-
-
-```
 """
-function qr_decomp(A,k::Int=size(A,2))
-    # A is invertible square matrix
-    # returns Q, a unitary matrix, 
-    # and R, an upper triangular matrix
-    Q = [normalize(A[:,1])]
-    R = spzeros(k,k)
-    R[1,1] = norm(A[:,1])
-    for kx in 2:k
+function qr_decomp(A::AbstractMatrix{<:Number},k::Tuple=size(A))
+
+    # getting this to work with rectangular matrices
+    # this needs to be verified a bit better
+
+    krow = k[1]
+    kcol = k[2]
+
+    Q = normalize(A[:,1])
+    R = zeros(krow,kcol)
+    R[1,1] = lpnorm(A[:,1])
+    for kx in 2:kcol
         v = A[:,kx] 
         for m in 1:kx-1
-
-            R[kx,m] = A[:,kx]'*Q[m]
-            v = v - R[kx,m]*Q[m]
+            R[m,kx] = Q[:,m]'*A[:,kx]
+            v = v - R[m,kx]*A[:,kx]
         end
-        R[kx,kx] = norm(v)
-        push!(Q,normalize(v))
+        if kx <= kcol && kx <= krow
+            R[kx,kx] = lpnorm(v)
+        end
+        Q=hcat(Q,normalize(v))
     end
 
    return Q,R
