@@ -59,7 +59,7 @@ using Test
     Q,R = Simularity.qr_decomp(A)
     @test isapprox(Q,[sqrt(10)/10 3*sqrt(10)/10; 3*sqrt(10)/10 -sqrt(10)/10],atol=1E-10)
     @test isapprox(R,[sqrt(10) 7*sqrt(10)/5; 0 sqrt(10)/5],atol=1E-10)
-   
+    
     # Rectangular
     A = [1 2 4; 3 4 5]
     Q,R = Simularity.qr_decomp(A)
@@ -69,7 +69,6 @@ using Test
     A = [1 2; 3 4; 5 6]
     Q,R = Simularity.qr_decomp(A)
     @test isapprox(Q,[sqrt(35)/35 13*sqrt(210)/210; 3*sqrt(35)/35 2*sqrt(210)/105; sqrt(35)/7 -sqrt(210)/42],atol=1E-10)
-    println(R)
     @test isapprox(R,[sqrt(35) 44*sqrt(35)/35; 0 2*sqrt(210)/35],atol=1E-10)
     stop
     

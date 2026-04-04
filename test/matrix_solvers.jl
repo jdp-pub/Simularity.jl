@@ -185,7 +185,6 @@ end
 
 # Arguments
 - `A::AbstractMatrix{<:Number}`: An invertible square matrix.
-- `k::Int`: The number of eigenvectors to consider.
 
 # Return 
 A unitary matrix and an upper triangular matrix.
@@ -194,13 +193,15 @@ A unitary matrix and an upper triangular matrix.
 QR decomposition. Useful for performing higher level operations.
 
 """
-function qr_decomp(A::AbstractMatrix{<:Number},k::Tuple=size(A))
-    krow = k[1]
-    kcol = k[2]
+function qr_decomp(A::AbstractMatrix{<:Number})
+    krow,kcol = size(A) 
 
-    Q = normalize(A[:,1])
-    krow < kcol ? R = zeros(krow,krow) : R = zeros(krow,kcol)
+    krow < kcol ? Q = zeros(krow,krow) :  Q = zeros(krow,kcol)
+    Q[:,1] = normalize(A[:,1])
+
+    krow < kcol ? R = zeros(krow,kcol) : R = zeros(kcol,kcol) 
     R[1,1] = lpnorm(A[:,1])
+
     for kx in 2:kcol
         v = A[:,kx] 
         for m in 1:kx-1
@@ -209,7 +210,7 @@ function qr_decomp(A::AbstractMatrix{<:Number},k::Tuple=size(A))
         end
         if kx <= kcol && kx <= krow
             R[kx,kx] = lpnorm(v)
-            Q=hcat(Q,normalize(v))
+            Q[:,kx] = normalize(v)
         end
     end
    return Q,R
