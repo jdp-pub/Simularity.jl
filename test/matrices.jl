@@ -1,5 +1,6 @@
 
-diag(A::AbstractMatrix{<:Number}) = [A[xn,xn] for xn in 1:min(size(A))]
+diag(A::AbstractMatrix{<:Number}) = [A[xn,xn] for xn in 1:minimum(size(A))]
+dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number}) = sum(a.*b)
 
 function I(n::Int=2)
     In = zeros(n,n)
@@ -45,4 +46,4 @@ end
 
 
 normalize(x::AbstractVector{<:Number},L::Int=2) = x/lpnorm(x,L)
-
+tr(A::AbstractMatrix{<:Number}) = sum(diag(A))

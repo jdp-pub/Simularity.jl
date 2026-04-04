@@ -195,28 +195,23 @@ QR decomposition. Useful for performing higher level operations.
 
 """
 function qr_decomp(A::AbstractMatrix{<:Number},k::Tuple=size(A))
-
-    # getting this to work with rectangular matrices
-    # this needs to be verified a bit better
-
     krow = k[1]
     kcol = k[2]
 
     Q = normalize(A[:,1])
-    R = zeros(krow,kcol)
+    krow < kcol ? R = zeros(krow,krow) : R = zeros(krow,kcol)
     R[1,1] = lpnorm(A[:,1])
     for kx in 2:kcol
         v = A[:,kx] 
         for m in 1:kx-1
-            R[m,kx] = Q[:,m]'*A[:,kx]
-            v = v - R[m,kx]*A[:,kx]
+            R[m,kx] = A[:,kx]'*Q[:,m]
+            v = v - R[m,kx]*Q[:,m]
         end
         if kx <= kcol && kx <= krow
             R[kx,kx] = lpnorm(v)
+            Q=hcat(Q,normalize(v))
         end
-        Q=hcat(Q,normalize(v))
     end
-
    return Q,R
 end
 
