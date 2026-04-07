@@ -48,19 +48,29 @@ using Test
     
     
     # Matrix solvers
-    # Power Iteration
+   
+    ## eig_vals
+    ### Diagonal
+    A = [1 0; 0 2]
+    #@test Simularity.eig_vals(A) == [1, 2]
+
+    ### Nondiagonal
+    A = [1 5; 3 2]
+    #@test Simularity.eig_vals(A) == [1/2*(3+sqrt(61)), 1/2*(3-sqrt(61))]
+    
+    ## Power Iteration
     #A = [1.5 0.5; 0.5 -1.5]
     #out = Simularity.power_iteration(A)
     #@test isapprox(out[1],1) || isapprox(out[1],-1)
     
-    # QR decomposition
-    # Square
+    ## QR decomposition
+    ### Square
     A = [1 2; 3 4]
     Q,R = Simularity.qr_decomp(A)
     @test isapprox(Q,[sqrt(10)/10 3*sqrt(10)/10; 3*sqrt(10)/10 -sqrt(10)/10],atol=1E-10)
     @test isapprox(R,[sqrt(10) 7*sqrt(10)/5; 0 sqrt(10)/5],atol=1E-10)
     
-    # Rectangular
+    ### Rectangular
     A = [1 2 4; 3 4 5]
     Q,R = Simularity.qr_decomp(A)
     @test isapprox(Q,[sqrt(10)/10 3*sqrt(10)/10; 3*sqrt(10)/10 -sqrt(10)/10],atol=1E-10)
@@ -70,9 +80,8 @@ using Test
     Q,R = Simularity.qr_decomp(A)
     @test isapprox(Q,[sqrt(35)/35 13*sqrt(210)/210; 3*sqrt(35)/35 2*sqrt(210)/105; sqrt(35)/7 -sqrt(210)/42],atol=1E-10)
     @test isapprox(R,[sqrt(35) 44*sqrt(35)/35; 0 2*sqrt(210)/35],atol=1E-10)
-    stop
     
-    #### Array sorts
+    # Array sorts
     
     # small predetermined array
     A = [3,6,2,4]
@@ -81,6 +90,11 @@ using Test
     A = [8.45,9,78.6,34,5.76,4.39,8.57,6]
     @test Simularity.bubble_sort(A) == [4.39,5.76,6,8.45,8.57,9,34,78.6]
 
+    A = [2,8,5,3,9,4]
+    @test Simularity.insertion_sort(A) == [2,3,4,5,8,9]
+
+    A = [2, 1, 4, 3]
+    @test Simularity.merge_sort(A) == [1, 2, 3, 4]
 
     # timing large rangom arrays
     f = [Simularity.bubble_sort]

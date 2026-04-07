@@ -39,26 +39,25 @@ function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
     return h,q
 end
 
-function eig_vals(A::AbstractMatrix{<:Number},mode::String="qr",k::Int=20,vtol::Number=1E-8)
+function eig_vals(A::AbstractMatrix{<:Number},mode::String="qr",k::Int=1000,vtol::Number=1E-8)
 
 
-    if mode == qr
+    if mode == "qr"
 
-        Q,R = qr_decomp(A)
-        Atemp = Q'*R
+        Atemp = A
         Ao = Atemp*2
         kx = 0
 
+        Q,R = qr_decomp(A)
+
         while !(isapprox(Ao,Atemp,atol=vtol) || kx==k)
             Atemp = Ao
-            Ao = R'*Q
-            Q,R = qr_decomp(Ao)
-            println(Atemp)
-            println(Ao)
+            Q,R = qr_decomp(Atemp)
+            Ao = R*Q
             kx = kx+1
         end
 
-        return diag(Ao)
+        return diag(R*Q)
 
     end
 end
@@ -196,11 +195,13 @@ QR decomposition. Useful for performing higher level operations.
 function qr_decomp(A::AbstractMatrix{<:Number})
     krow,kcol = size(A) 
 
-    krow < kcol ? Q = zeros(krow,krow) :  Q = zeros(krow,kcol)
+    krow < kcol ? Q = Matrix{Float64}(undef, krow, krow) :  Q = Matrix{Float64}(undef, krow, kcol)
     Q[:,1] = normalize(A[:,1])
 
-    krow < kcol ? R = zeros(krow,kcol) : R = zeros(kcol,kcol) 
+    krow < kcol ? R = Matrix{Float64}(undef, krow, kcol) : R = Matrix{Float64}(undef, kcol, kcol)
     R[1,1] = lpnorm(A[:,1])
+
+    v = Vector{Float64}(undef, krow)
 
     for kx in 2:kcol
         v = A[:,kx] 
