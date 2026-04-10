@@ -19,7 +19,7 @@ The time evolution of supplied parameters and the corresponding time series.
 Gauss-Legendre Runge-Kutta ODE solver. Good for nth order implicit and explicit 
 Runge-Kutta, dynamical evolution of systems that can be cast as an array of ODEs.
 
-
+# References
 """
 function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::Vector=[])
 
@@ -31,19 +31,15 @@ function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::I
 
     t = range(ti,tf,n)
     dt = t[2]-t[1]
-
     # set up polynomial in ascending order, index is polynomial power
-    p = [ factorial(s)^2/factorial(2*s)*(-1)^(s-k)*binomial(s,k)*binomial(s+k,k) for k in 0:s]
+    p = normalized_legendre(s) 
     
-    #construct companion matrix
-    C = hcat(I(length(p)),-p)
-
     # find roots of polynomial
-    roots = eig_vals(C)
-    println(roots)
-    stop
+    roots = polyroots(p)
 
     # integrate roots
+
+    stop
 
     # compute runge kutta
     for nx in 2:n

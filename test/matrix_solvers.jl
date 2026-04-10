@@ -28,8 +28,8 @@ function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
             v = v - h[j,m]*q[j]
         end
         if m != k
-            h[m+1,m] = norm(v)
-            push!(q,normalize(v))
+            h[m+1,m] = lpnorm(v)
+            push!(q,normalize(v)) # should be removed in favor of writing to preallocated space
         end
     end
 
@@ -39,26 +39,28 @@ function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
     return h,q
 end
 
-function eig_vals(A::AbstractMatrix{<:Number},mode::String="qr",k::Int=1000,vtol::Number=1E-8)
+function eig_vals(A::AbstractMatrix{<:Number};mode::String="qr",k::Int=1000,vtol::Number=1E-8)
 
 
     if mode == "qr"
 
-        Atemp = A
-        Ao = Atemp*2
+        # should be changed to implicit qr algorihtm during optimization phase
+
+        Ao = A
+        Atemp = A*2
         kx = 0
+
 
         Q,R = qr_decomp(A)
 
-        while !(isapprox(Ao,Atemp,atol=vtol) || kx==k)
-            Atemp = Ao
+        while !(isapprox(diag(Ao),diag(Atemp),atol=vtol) || kx==k)
+            Atemp = Ao 
             Q,R = qr_decomp(Atemp)
             Ao = R*Q
             kx = kx+1
         end
 
-        return diag(R*Q)
-
+        return diag(Ao)
     end
 end
 
@@ -193,12 +195,15 @@ QR decomposition. Useful for performing higher level operations.
 
 """
 function qr_decomp(A::AbstractMatrix{<:Number})
-    krow,kcol = size(A) 
+    krow,kcol = size(A)
 
-    krow < kcol ? Q = Matrix{Float64}(undef, krow, krow) :  Q = Matrix{Float64}(undef, krow, kcol)
+    # integers are cast to float, complex operation retained
+    (eltype(A) isa Integer) ? type = typeof(float.(A)[1,1]) : type = typeof(float.(A)[1,1])
+
+    krow < kcol ? Q = zeros(type, krow, krow) :  Q = zeros(type, krow, kcol)
     Q[:,1] = normalize(A[:,1])
 
-    krow < kcol ? R = Matrix{Float64}(undef, krow, kcol) : R = Matrix{Float64}(undef, kcol, kcol)
+    krow < kcol ? R = zeros(type, krow, kcol) : R =zeros(type, kcol, kcol)
     R[1,1] = lpnorm(A[:,1])
 
     v = Vector{Float64}(undef, krow)
@@ -217,4 +222,13 @@ function qr_decomp(A::AbstractMatrix{<:Number})
    return Q,R
 end
 
-
+function round_number!(A::AbstractMatrix;atol::Number=1E-18)
+    x,y = size(A)
+    for ix in 1:x
+        for iy in 1:y
+            if isnan() abs(A[x,y]) < atol 
+                A[x,y] = 0
+            end
+        end
+    end
+end

@@ -50,13 +50,15 @@ using Test
     # Matrix solvers
    
     ## eig_vals
+    tol = 1E-8
+    
     ### Diagonal
     A = [1 0; 0 2]
-    #@test Simularity.eig_vals(A) == [1, 2]
+    @test isapprox(Simularity.eig_vals(A;vtol=tol),[1, 2],atol=tol)
 
     ### Nondiagonal
     A = [1 5; 3 2]
-    #@test Simularity.eig_vals(A) == [1/2*(3+sqrt(61)), 1/2*(3-sqrt(61))]
+    @test isapprox(Simularity.eig_vals(A;vtol=tol),[1/2*(3+sqrt(61)), 1/2*(3-sqrt(61))],atol=tol)
     
     ## Power Iteration
     #A = [1.5 0.5; 0.5 -1.5]
@@ -69,7 +71,16 @@ using Test
     Q,R = Simularity.qr_decomp(A)
     @test isapprox(Q,[sqrt(10)/10 3*sqrt(10)/10; 3*sqrt(10)/10 -sqrt(10)/10],atol=1E-10)
     @test isapprox(R,[sqrt(10) 7*sqrt(10)/5; 0 sqrt(10)/5],atol=1E-10)
-    
+
+    A = [1 3 5; 1 3 1; 2 -1 7]
+    Q,R = Simularity.qr_decomp(A)
+    @test isapprox(Q,[sqrt(6)/6 sqrt(3)/3 sqrt(2)/2; 
+                      sqrt(6)/6 sqrt(3)/3 -sqrt(2)/2;
+                      sqrt(6)/3 -sqrt(3)/3 0],atol=1E-10)
+    @test isapprox(R,[sqrt(6) 2*sqrt(6)/3 10*sqrt(6)/3; 
+                      0 7*sqrt(3)/3 -sqrt(3)/3; 
+                      0 0 2*sqrt(2)],atol=1E-10)
+
     ### Rectangular
     A = [1 2 4; 3 4 5]
     Q,R = Simularity.qr_decomp(A)
@@ -80,7 +91,8 @@ using Test
     Q,R = Simularity.qr_decomp(A)
     @test isapprox(Q,[sqrt(35)/35 13*sqrt(210)/210; 3*sqrt(35)/35 2*sqrt(210)/105; sqrt(35)/7 -sqrt(210)/42],atol=1E-10)
     @test isapprox(R,[sqrt(35) 44*sqrt(35)/35; 0 2*sqrt(210)/35],atol=1E-10)
-    
+
+
     # Array sorts
     
     # small predetermined array
