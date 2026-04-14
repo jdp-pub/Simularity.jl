@@ -8,13 +8,16 @@
 A fully sorted or partially sorted array.
 
 # Description
-Bubble sort is a simple array sorting algorithm with the property 
+Bubble sort is a simple array sorting algorithm[^bubble-sort] with the property 
 that larger values are guaranteed to arive at the and of the list 
-each pass (hence the bubbling). This leads to (some interesting implications)[https://buttondown.com/hillelwayne/archive/when-would-you-ever-want-bubblesort/]
+each pass (hence the bubbling). This leads to (some interesting implications[^when-would-you-ever-want-bubblesort] 
 and is best used as a way to quickly partially order lists, most relevant in 
-(certain simulation tasks)[https://discussions.unity.com/t/depth-sorting-of-billboard-particles-how-can-i-do-it/5053].
+certain simulation tasks[^depth-sorting-of-billboard-particles-how-can-i-do-it]
 
 # References
+[^bubble-sort]: [Bubble Sort, https://en.wikipedia.org/wiki/Bubble_sort (accessed 4 14, 2026).](https://en.wikipedia.org/wiki/Bubble_sort)
+[^when-would-you-ever-want-bubblesort]: [When Would You Ever Want Bubble Sort?, https://buttondown.com/hillelwayne/archive/when-would-you-ever-want-bubblesort/ (accessed 4 14, 2026).](https://buttondown.com/hillelwayne/archive/when-would-you-ever-want-bubblesort/)
+[^depth-sorting-of-billboard-particles-how-can-i-do-it]: [Depth Sorting of Billboard Particles, How Can I Do It?, https://discussions.unity.com/t/depth-sorting-of-billboard-particles-how-can-i-do-it/5053 (accessed 4 14, 2026).](https://discussions.unity.com/t/depth-sorting-of-billboard-particles-how-can-i-do-it/5053). 
 """
 function bubble_sort(A::AbstractArray,k::Number=1)
     V = A
