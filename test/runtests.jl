@@ -3,6 +3,37 @@ using Test
 
 @testset "Simularity.jl" begin
 
+    # Integration
+    
+    ## riemann_integration() 
+    ### left
+    dx = 1E-8
+    @test isapprox(Simularity.riemann_integration(-1:dx:1,[x^2 for x in -1:dx:1],"left"),2/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(1:-dx:-1,[x^2 for x in 1:-dx:-1],"left"),-2/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(0:dx:1,[x^2 for x in 0:dx:1],"left"),1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(0:-dx:-1,[x^2 for x in 0:-dx:-1],"left"),-1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(-1:dx:0,[x^2 for x in -1:dx:0],"left"),1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(1:-dx:0,[x^2 for x in 1:-dx:0],"left"),-1/3,atol=1E-8)
+
+    ### midpoint
+    dx = 1E-4
+    @test isapprox(Simularity.riemann_integration(-1:dx:1,[x^2 for x in -1:dx:1]),2/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(1:-dx:-1,[x^2 for x in 1:-dx:-1]),-2/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(0:dx:1,[x^2 for x in 0:dx:1]),1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(0:-dx:-1,[x^2 for x in 0:-dx:-1]),-1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(-1:dx:0,[x^2 for x in -1:dx:0]),1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(1:-dx:0,[x^2 for x in 1:-dx:0]),-1/3,atol=1E-8)
+
+    ### right
+    dx = 1E-8
+    @test isapprox(Simularity.riemann_integration(-1:dx:1,[x^2 for x in -1:dx:1],"right"),2/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(1:-dx:-1,[x^2 for x in 1:-dx:-1],"right"),-2/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(0:dx:1,[x^2 for x in 0:dx:1],"right"),1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(0:-dx:-1,[x^2 for x in 0:-dx:-1],"right"),-1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(-1:dx:0,[x^2 for x in -1:dx:0],"right"),1/3,atol=1E-8)
+    @test isapprox(Simularity.riemann_integration(1:-dx:0,[x^2 for x in 1:-dx:0],"right"),-1/3,atol=1E-8)
+    stop
+
     # Matrices
     
     ## diag()
