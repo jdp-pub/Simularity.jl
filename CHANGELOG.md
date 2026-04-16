@@ -49,7 +49,7 @@ This update focuses on expanding core functionality; keeping scalability in mind
     - insertion_sort
     - merge_sort
 - diffeq_solvers.jl
-    - rk1: First order Runge-Kutta diffeq solver. (TODO)
+    - rk1
     - rk2
     - rk23 (TODO)
     - rk3
@@ -60,8 +60,10 @@ This update focuses on expanding core functionality; keeping scalability in mind
     - diag
     - dot
     - I
-    - lpnorm: L2 norm implemented.
-        - add other norms (TODO)
+    - lpnorm: 
+        - L1 norm (TODO)
+        - L2 norm
+        - L3 norm (TODO)
     - normalize
     - tr
 - matrix_solvers.jl
@@ -70,6 +72,9 @@ This update focuses on expanding core functionality; keeping scalability in mind
     - qr_decomp: Accepts rectangular matrices.
     - round_number!: Rounds elements of a matrix to 0.
 - polynomial.jl
+    - lagrange_basis
+    - lagrange_interpolation
+    - lagrange_poly
     - normalized_legendre
     - polyroots
 
@@ -96,7 +101,8 @@ All functions were tested and tested again. (TODO)
     - qr_decomp: Defined expected types. Changed convergence type from iteration count to tolerance check.
 
 ## Fixed
-- Improper indexing in MBO. 
+- matrices.jl
+    - Improper indexing in MBO. 
 
 ---
 

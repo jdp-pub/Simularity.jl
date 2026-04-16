@@ -1,7 +1,43 @@
+"""
+    diag(A::AbstractMatrix)
 
-diag(A::AbstractMatrix{<:Number}) = [A[xn,xn] for xn in 1:minimum(size(A))]
+# Arguments
+- `A::AbstractMatrix`: The matrix of interest.
+
+# Return 
+The diagonal elements of a matrix as an array.
+
+"""
+diag(A::AbstractMatrix) = [A[xn,xn] for xn in 1:minimum(size(A))]
+
+"""
+    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+
+# Arguments
+- `a::AbstractArray{<:Number}`: Array on left side of dot product.
+- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+
+# Return 
+The dot product of two arrays (vectors).
+
+"""
 dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number}) = sum(a.*b)
 
+"""
+    I(n::Int=2)
+
+
+# Arguments
+- `a::AbstractArray{<:Number}`: Array on left side of dot product.
+- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+
+# Return 
+The dot product of two arrays (vectors).
+
+# Description
+
+# References
+"""
 function I(n::Int=2)
     In = zeros(n,n)
     for ix in 1:n
@@ -10,6 +46,20 @@ function I(n::Int=2)
     return In
 end
 
+"""
+    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+
+# Arguments
+- `a::AbstractArray{<:Number}`: Array on left side of dot product.
+- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+
+# Return 
+The dot product of two arrays (vectors).
+
+# Description
+
+# References
+"""
 function MBO(Ol,pos,l)
     # many body operator
     # pos and Ol should be sorted by index previously
@@ -32,6 +82,20 @@ function MBO(Ol,pos,l)
     return O
 end
 
+"""
+    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+
+# Arguments
+- `a::AbstractArray{<:Number}`: Array on left side of dot product.
+- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+
+# Return 
+The dot product of two arrays (vectors).
+
+# Description
+
+# References
+"""
 function lpnorm(A,L::Int=2)
     if L == 1
 
@@ -44,6 +108,34 @@ function lpnorm(A,L::Int=2)
     end
 end
 
+"""
+    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
 
+# Arguments
+- `a::AbstractArray{<:Number}`: Array on left side of dot product.
+- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+
+# Return 
+The dot product of two arrays (vectors).
+
+# Description
+
+# References
+"""
 normalize(x::AbstractVector{<:Number},L::Int=2) = x/lpnorm(x,L)
+
+"""
+    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+
+# Arguments
+- `a::AbstractArray{<:Number}`: Array on left side of dot product.
+- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+
+# Return 
+The dot product of two arrays (vectors).
+
+# Description
+
+# References
+"""
 tr(A::AbstractMatrix{<:Number}) = sum(diag(A))

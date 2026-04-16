@@ -52,6 +52,8 @@ Additions can be any size, but working branches should be complete before stagin
 
 Include a hyperlink to function documentation any time a function is mentioned.
 
+
+
 [format directions](https://keepachangelog.com/en/1.1.0/)
 
 ## Citations
