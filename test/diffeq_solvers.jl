@@ -36,7 +36,7 @@ function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::I
 
     # calculating the butcher-tableau may need to be moved to its own function
     # set up polynomial in ascending order, index is polynomial power
-    p = normalized_legendre(s) 
+    p = normalized_legendre_poly_coef(s) 
     
     # find roots of polynomial
     roots = polyroots(p)
