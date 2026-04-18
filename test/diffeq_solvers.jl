@@ -23,7 +23,9 @@ Runge-Kutta, dynamical evolution of systems that can be cast as an array of ODEs
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
 
 """
-function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::Vector=[])
+function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::Vector=[],xn::Int=100000)
+
+    s = 3
 
     y = y0
     yt = y
@@ -37,11 +39,25 @@ function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::I
     # calculating the butcher-tableau may need to be moved to its own function
     # set up polynomial in ascending order, index is polynomial power
     p = normalized_legendre_poly_coef(s) 
+
     
     # find roots of polynomial
     roots = polyroots(p)
 
-    # integrate roots
+    aij = zeros(length(roots),length(roots))
+    bi = zeros(length(roots))
+    lj = zeros(xn)
+    li = zeros(xn)
+    testm = 0
+    for i in 1:length(roots)
+        for j in 1:length(roots)
+            lj = [lagrange_poly(roots,x,j) for x in range(0,roots[i],xn)]
+                # change to gaussian quadrature
+            aij[i,j] = riemann_integration(range(0,roots[i],xn),lj)
+        end
+        li = [lagrange_poly(roots,x,i) for x in range(0,1,xn)]
+        bi[i] = riemann_integration(range(0,1,xn),li)
+    end
 
     stop
 
@@ -79,7 +95,6 @@ of systems that can be cast as an array of ODEs.
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
 
 """
-
 function rk1(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,fargs::Vector=[])
     y = y0
     yt = y

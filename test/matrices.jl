@@ -28,15 +28,11 @@ dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number}) = sum(a.*b)
 
 
 # Arguments
-- `a::AbstractArray{<:Number}`: Array on left side of dot product.
-- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+- `n::Int`: The length of one side of the matrix.
 
 # Return 
-The dot product of two arrays (vectors).
+nxn identity matrix.
 
-# Description
-
-# References
 """
 function I(n::Int=2)
     In = zeros(n,n)

@@ -1,9 +1,5 @@
-"""
 
-# References
-https://sites.math.rutgers.edu/~falk/math573/lecture13.pdf
-"""
-function adaptive()
+function gaussian_quadrature()
 
 end
 
@@ -33,10 +29,6 @@ function riemann_integration(x::AbstractArray,y::AbstractArray,mode::String="mid
     elseif mode == "right"
         return sum([(x[nx+1]-x[nx])*y[nx+1] for nx in 1:length(x)-1])
     end
-end
-
-function monte_carlo()
-
 end
 
 

@@ -61,7 +61,7 @@ The Lagrange polynomial used for building a basis which allows
 function lagrange_poly(xl::AbstractArray,x::Number,j::Int)
     k = length(xl)
     l = 1
-    for m in 0:k
+    for m in 1:k
         if m != j
             l = l * (x-xl[m])/(xl[j]-xl[m])
         end
