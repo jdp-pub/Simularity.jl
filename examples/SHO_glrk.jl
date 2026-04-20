@@ -24,13 +24,13 @@ end
 function main()
 
     # number of steps
-    n = 1000
+    n = 10000
     
     # initial conditions
-    y = [1,0]
+    y = [1.,0.]
     
     # any arguments to pass to the function
-    fargs = [1,1]
+    fargs = [1.,1.]
     
     # compute with rk4
     x,t = Simularity.glrk(SHO,y,0,10,n,2,fargs)

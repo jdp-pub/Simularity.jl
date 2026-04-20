@@ -25,7 +25,8 @@ Runge-Kutta, dynamical evolution of systems that can be cast as an array of ODEs
 """
 function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::Vector=[],xn::Int=100000)
 
-    s = 3
+    # needs stability tests and optomization
+    
 
     y = y0
     yt = y
@@ -52,18 +53,19 @@ function glrk(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,s::I
     for i in 1:length(roots)
         for j in 1:length(roots)
             lj = [lagrange_poly(roots,x,j) for x in range(0,roots[i],xn)]
-                # change to gaussian quadrature
+            
+            # try higher accuracy integrators to reduce iteration count
             aij[i,j] = riemann_integration(range(0,roots[i],xn),lj)
         end
         li = [lagrange_poly(roots,x,i) for x in range(0,1,xn)]
         bi[i] = riemann_integration(range(0,1,xn),li)
     end
 
-    stop
 
     # compute runge kutta
     for nx in 2:n
-
+        yi = [y + sum([aij[i,j]*f(y,t[nx],fargs) for j in 1:length(roots)])*dt for i in 1:length(roots)]
+        y = y + sum([bi[i]*f(y,t[nx],fargs) for i in 1:length(roots)])*dt
 
         yl[nx] = y
     end

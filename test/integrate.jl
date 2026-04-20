@@ -1,8 +1,3 @@
-
-function gaussian_quadrature()
-
-end
-
 """
     riemann_integration(x::AbstractArray,y::AbstractArray,mode::String="mid")
 
