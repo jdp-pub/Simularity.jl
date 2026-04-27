@@ -14,6 +14,9 @@
 
 # Return 
 The time evolution of supplied parameters and the corresponding time series.
+Each index of the position series is a time evolution of one of the input parameters.
+For example, if an initial condition is specified [y1 y2], then the output is [y1t y2t] 
+where y1t = [yt1 yt2 ... ytn].
 
 # Description
 Gauss-Legendre Runge-Kutta ODE solver[^list-of-runge-kutt-methods]. Good for nth order implicit and explicit 
@@ -88,6 +91,10 @@ end
 
 # Return 
 The time evolution of supplied parameters and the corresponding time series.
+Each index of the position series is a time evolution of one of the input parameters.
+For example, if an initial condition is specified [y1 y2], then the output is [y1t y2t] 
+where y1t = [yt1 yt2 ... ytn].
+
 
 # Description
 First order Runge-Kutta ODE solver or identically Euler's method[^list-of-runge-kutt-methods], dynamical evolution 
@@ -107,8 +114,8 @@ function rk1(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,fargs
     t = range(ti,tf,n)
     dt = t[2]-t[1]
 
-    k1 = typeof(y0)(undef,n)
-    k2 = typeof(y0)(undef,n)
+    k1 = typeof(y0)(undef,size(y0))
+    k2 = typeof(y0)(undef,size(y0))
 
     for nx in 2:n
         y = y + f(yt,t[nx],fargs).*dt
@@ -134,6 +141,10 @@ end
 
 # Return 
 The time evolution of supplied parameters and the corresponding time series.
+Each index of the position series is a time evolution of one of the input parameters.
+For example, if an initial condition is specified [y1 y2], then the output is [y1t y2t] 
+where y1t = [yt1 yt2 ... ytn].
+
 
 # Description
 Second order Runge-Kutta ODE solver[^list-of-runge-kutt-methods], dynamical evolution of systems that can be cast 
@@ -154,8 +165,8 @@ function rk2(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,fargs
     t = range(ti,tf,n)
     dt = t[2]-t[1]
 
-    k1 = typeof(y0)(undef,n)
-    k2 = typeof(y0)(undef,n)
+    k1 = typeof(y0)(undef,size(y0))
+    k2 = typeof(y0)(undef,size(y0))
 
     for nx in 2:n
         k1 = f(y,t[nx],fargs).*dt
@@ -187,6 +198,9 @@ end
 
 # Return 
 The time evolution of supplied parameters and the corresponding time series.
+Each index of the position series is a time evolution of one of the input parameters.
+For example, if an initial condition is specified [y1 y2], then the output is [y1t y2t] 
+where y1t = [yt1 yt2 ... ytn].
 
 # Description
 Third order Runge-Kutta ODE solver[^list-of-runge-kutt-methods], dynamical evolution of systems that can be cast 
@@ -208,9 +222,9 @@ function rk3(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,fargs
     t = range(ti,tf,n)
     dt = t[2]-t[1]
 
-    k1 = typeof(y0)(undef,n)
-    k2 = typeof(y0)(undef,n)
-    k3 = typeof(y0)(undef,n)
+    k1 = typeof(y0)(undef,size(y0))
+    k2 = typeof(y0)(undef,size(y0))
+    k3 = typeof(y0)(undef,size(y0))
 
     for nx in 2:n
         k1 = f(y,t[nx],fargs).*dt
@@ -244,7 +258,10 @@ end
 - `fargs::Vector`: Additional parameters to pass to f.
 
 # Return 
-The time evolution of supplied parameters and the corresponding time series.
+The time evolution of supplied parameters and the corresponding time series. 
+Each index of the position series is a time evolution of one of the input parameters.
+For example, if an initial condition is specified [y1 y2], then the output is [y1t y2t] 
+where y1t = [yt1 yt2 ... ytn].
 
 # Description
 Fourth order Runge-Kutta ODE solver[^list-of-runge-kutt-methods], dynamical evolution of systems that can be cast 
@@ -265,10 +282,10 @@ function rk4(f,y0::Vector{<:Number},ti::Number=0,tf::Number=10,n::Int=1000,fargs
     t = range(ti,tf,n)
     dt = t[2]-t[1]
 
-    k1 = typeof(y0)(undef,n)
-    k2 = typeof(y0)(undef,n)
-    k3 = typeof(y0)(undef,n)
-    k4 = typeof(y0)(undef,n)
+    k1 = typeof(y0)(undef,size(y0))
+    k2 = typeof(y0)(undef,size(y0))
+    k3 = typeof(y0)(undef,size(y0))
+    k4 = typeof(y0)(undef,size(y0))
 
     for nx in 2:n
         k1 = f(y,t[nx],fargs).*dt
