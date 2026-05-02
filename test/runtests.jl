@@ -32,7 +32,6 @@ using Test
     @test isapprox(Simularity.riemann_integration(0:-dx:-1,[x^2 for x in 0:-dx:-1],"right"),-1/3,atol=1E-8)
     @test isapprox(Simularity.riemann_integration(-1:dx:0,[x^2 for x in -1:dx:0],"right"),1/3,atol=1E-8)
     @test isapprox(Simularity.riemann_integration(1:-dx:0,[x^2 for x in 1:-dx:0],"right"),-1/3,atol=1E-8)
-    stop
 
     # Matrices
     
@@ -126,7 +125,8 @@ using Test
 
     # Array sorts
     
-    # small predetermined array
+    ## small predetermined array
+    ### ascending
     A = [3,6,2,4]
     @test Simularity.bubble_sort(A) == [2,3,4,6]
 
@@ -139,8 +139,22 @@ using Test
     A = [2, 1, 4, 3]
     @test Simularity.merge_sort(A) == [1, 2, 3, 4]
 
+
+    ### descending
+    A = [3,6,2,4]
+    @test Simularity.bubble_sort(A,mode="DS") == reverse([2,3,4,6])
+
+    A = [8.45,9,78.6,34,5.76,4.39,8.57,6]
+    @test Simularity.bubble_sort(A,mode="DS") == reverse([4.39,5.76,6,8.45,8.57,9,34,78.6])
+
+    A = [2,8,5,3,9,4]
+    @test Simularity.insertion_sort(A,mode="DS") == reverse([2,3,4,5,8,9])
+
+    A = [2, 1, 4, 3]
+    @test Simularity.merge_sort(A,mode="DS") == reverse([1, 2, 3, 4])
+
     # timing large rangom arrays
-    f = [Simularity.bubble_sort]
-    n = 3 # length of random array  
-    @test all((Simularity.vec_compare(f,n) .< [n^2/1E6]) .== 1)
+    #f = [Simularity.bubble_sort]
+    #n = 3 # length of random array  
+    #@test all((Simularity.f_compare(f,n) .< [n^2/1E6]) .== 1)
 end

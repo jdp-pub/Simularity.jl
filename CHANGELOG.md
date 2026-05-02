@@ -45,11 +45,11 @@ This update focuses on expanding core functionality; keeping scalability in mind
 
 ### Source
 - array_sorts.jl
-    - bubble_sort: allow descending order sorting (TODO), added partial sorting.
+    - bubble_sort: Ascending or descending order sorting, added partial sorting.
     - insertion_sort
     - merge_sort
 - diffeq_solvers.jl
-    - rk1
+    - rk1: Runge-Kutta order 1.
     - rk2
     - rk23 (TODO)
     - rk3
@@ -61,7 +61,7 @@ This update focuses on expanding core functionality; keeping scalability in mind
     - diag
     - dot
     - I
-    - lpnorm: general L_p norms.
+    - lpnorm
     - normalize
     - tr
 - matrix_solvers.jl

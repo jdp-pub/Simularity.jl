@@ -95,7 +95,7 @@ The dot product of two arrays (vectors).
 https://en.wikipedia.org/wiki/Norm_(mathematics)
 
 """
-lpnorm(A,p::Number=2) = (sum(abs.(A).^p))^(1./p)
+lpnorm(A,p::Number=2) = (sum(abs.(A).^p))^(1. /p)
 
 """
     dot(a::AbstractArray,b::AbstractArray)
