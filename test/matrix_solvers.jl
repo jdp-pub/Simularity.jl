@@ -1,9 +1,9 @@
 
 """
-    arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    arnoldi(A::AbstractMatrix,k::Int=size(A,2))
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: The matrix of interest.
+- `A::AbstractMatrix`: The matrix of interest.
 - `k::Int`: The number of eigenvectors to consider in the subspace. 
 
 # Return 
@@ -13,7 +13,7 @@ Upper Hessenberg form of A and the eivenvectors.
 Useful for non-Hermitian and Hermitian matrices.
 
 """
-function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+function arnoldi(A::AbstractMatrix,k::Int=size(A,2))
     # begin with ground state eigenvalue, eigenvector
     E,p = gs(A)
     v = []
@@ -39,7 +39,7 @@ function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
     return h,q
 end
 
-function eig_vals(A::AbstractMatrix{<:Number};mode::String="qr",k::Int=1000,vtol::Number=1E-8)
+function eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1E-8)
 
 
     if mode == "qr"
@@ -79,7 +79,7 @@ end
 
 
 """
-function gs(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
+function gs(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
     #findes the smallest eigenvalue and eigenvector 
     #using the variational method
 
@@ -102,10 +102,10 @@ function gs(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(ran
 end
 
 """
-    lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    lanczos(A::AbstractMatrix,k::Int=size(A,2))
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: The matrix of interest.
+- `A::AbstractMatrix`: The matrix of interest.
 - `k::Int`: The number of eigenvectors to consider in the subspace. 
 
 # Return 
@@ -115,7 +115,7 @@ Tridiagonal form of A and the eigenvectors.
 Useful for hermitian matrices, faster than other methods in the valid case. 
 
 """
-function lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+function lanczos(A::AbstractMatrix,k::Int=size(A,2))
     # begin with ground state
     E,p = gs(A)
 
@@ -146,11 +146,11 @@ function lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
 end
 
 """
-    power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
+    power_iteration(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: The matrix to be examined.
-- `x::AbstractVector{<:Number}`: Guess for eigenvector, helps with convergence.
+- `A::AbstractMatrix`: The matrix to be examined.
+- `x::AbstractVector`: Guess for eigenvector, helps with convergence.
 - `k::Int`: Maximum iterations for convergence
 - `vtol::Float`: Convergence tolerance. 
 
@@ -164,7 +164,7 @@ Best suited for a getting single eigen value/vector quickly.
 
 
 """
-function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
+function power_iteration(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
     kx = 0
     xtemp = x
     dottemp = NaN 
@@ -182,10 +182,10 @@ function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}
 end
 
 """
-    qr_decomp(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    qr_decomp(A::AbstractMatrix,k::Int=size(A,2))
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: An invertible square matrix.
+- `A::AbstractMatrix`: An invertible square matrix.
 
 # Return 
 A unitary matrix and an upper triangular matrix.
@@ -194,7 +194,7 @@ A unitary matrix and an upper triangular matrix.
 QR decomposition. Useful for performing higher level operations.
 
 """
-function qr_decomp(A::AbstractMatrix{<:Number})
+function qr_decomp(A::AbstractMatrix)
     krow,kcol = size(A)
 
     # integers are cast to float, complex operation retained

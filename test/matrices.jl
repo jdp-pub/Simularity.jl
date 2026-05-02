@@ -11,17 +11,17 @@ The diagonal elements of a matrix as an array.
 diag(A::AbstractMatrix) = [A[xn,xn] for xn in 1:minimum(size(A))]
 
 """
-    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+    dot(a::AbstractArray,b::AbstractArray)
 
 # Arguments
-- `a::AbstractArray{<:Number}`: Array on left side of dot product.
-- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+- `a::AbstractArray`: Array on left side of dot product.
+- `b::AbstractArray`: Array on left side of dot product.
 
 # Return 
 The dot product of two arrays (vectors).
 
 """
-dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number}) = sum(a.*b)
+dot(a::AbstractArray,b::AbstractArray) = sum(a.*b)
 
 """
     I(n::Int=2)
@@ -43,11 +43,11 @@ function I(n::Int=2)
 end
 
 """
-    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+    dot(a::AbstractArray,b::AbstractArray)
 
 # Arguments
-- `a::AbstractArray{<:Number}`: Array on left side of dot product.
-- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+- `a::AbstractArray`: Array on left side of dot product.
+- `b::AbstractArray`: Array on left side of dot product.
 
 # Return 
 The dot product of two arrays (vectors).
@@ -79,11 +79,30 @@ function MBO(Ol,pos,l)
 end
 
 """
-    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+    dot(a::AbstractArray,b::AbstractArray)
 
 # Arguments
-- `a::AbstractArray{<:Number}`: Array on left side of dot product.
-- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+- `a::AbstractArray`: Array on left side of dot product.
+- `b::AbstractArray`: Array on left side of dot product.
+
+# Return 
+The dot product of two arrays (vectors).
+
+# Description
+
+# References
+
+https://en.wikipedia.org/wiki/Norm_(mathematics)
+
+"""
+lpnorm(A,p::Number=2) = (sum(abs.(A).^p))^(1./p)
+
+"""
+    dot(a::AbstractArray,b::AbstractArray)
+
+# Arguments
+- `a::AbstractArray`: Array on left side of dot product.
+- `b::AbstractArray`: Array on left side of dot product.
 
 # Return 
 The dot product of two arrays (vectors).
@@ -92,24 +111,14 @@ The dot product of two arrays (vectors).
 
 # References
 """
-function lpnorm(A,L::Int=2)
-    if L == 1
-
-    elseif L == 2
-        return sqrt(sum(A.*A))
-
-
-    elseif L == 3
-
-    end
-end
+normalize(x::AbstractVector,L::Int=2) = x/lpnorm(x,L)
 
 """
-    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
+    dot(a::AbstractArray,b::AbstractArray)
 
 # Arguments
-- `a::AbstractArray{<:Number}`: Array on left side of dot product.
-- `b::AbstractArray{<:Number}`: Array on left side of dot product.
+- `a::AbstractArray`: Array on left side of dot product.
+- `b::AbstractArray`: Array on left side of dot product.
 
 # Return 
 The dot product of two arrays (vectors).
@@ -118,20 +127,4 @@ The dot product of two arrays (vectors).
 
 # References
 """
-normalize(x::AbstractVector{<:Number},L::Int=2) = x/lpnorm(x,L)
-
-"""
-    dot(a::AbstractArray{<:Number},b::AbstractArray{<:Number})
-
-# Arguments
-- `a::AbstractArray{<:Number}`: Array on left side of dot product.
-- `b::AbstractArray{<:Number}`: Array on left side of dot product.
-
-# Return 
-The dot product of two arrays (vectors).
-
-# Description
-
-# References
-"""
-tr(A::AbstractMatrix{<:Number}) = sum(diag(A))
+tr(A::AbstractMatrix) = sum(diag(A))

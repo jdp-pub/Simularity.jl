@@ -55,15 +55,13 @@ This update focuses on expanding core functionality; keeping scalability in mind
     - rk3
     - rk4
     - rk45 (TODO)
-    - glrk: Gauss-Legendre Runge Kutta. (TODO)
+    - glrk: Gauss-Legendre Runge Kutta.
+    - glrka: Adaptive Gauss-Legendre Runge Kutta. (TODO)
 - matrices.jl
     - diag
     - dot
     - I
-    - lpnorm: 
-        - L1 norm (TODO)
-        - L2 norm
-        - L3 norm (TODO)
+    - lpnorm: general L_p norms.
     - normalize
     - tr
 - matrix_solvers.jl

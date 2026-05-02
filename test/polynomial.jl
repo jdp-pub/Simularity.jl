@@ -113,10 +113,10 @@ form was acquired from Melvin Leok[^Gauss-Legendre-method-as-a-collocation-metho
 normalized_legendre_poly_coef(s::Int) = [factorial(s)^2/factorial(2*s)*(-1)^(s-k)*binomial(s,k)*binomial(s+k,k) for k in 0:s]
 
 """
-    polyroots(p::Vector)
+    polyroots(p::AbstractVector)
 
 # Arguments
-- `p::Vector`: The coefficients of the polynomial in ascending order.
+- `p::AbstractVector`: The coefficients of the polynomial in ascending order.
 
 # Return 
 The roots of a polynomial as a vector.
@@ -130,5 +130,5 @@ polynomial[^Companion_matrix].
 [^Companion_matrix]: [Companion Matrix, https://en.wikipedia.org/wiki/Companion_matrix (accessed April 17, 2026).](https://en.wikipedia.org/wiki/Companion_matrix)
 
 """
-polyroots(p::Vector) = eig_vals(hcat(I(length(p)-1)[:,2:length(p)-1],-p[1:length(p)-1]))
+polyroots(p::AbstractVector) = eig_vals(hcat(I(length(p)-1)[:,2:length(p)-1],-p[1:length(p)-1]))
 
