@@ -12,6 +12,9 @@ Upper Hessenberg form of A and the eivenvectors.
 # Description
 Useful for non-Hermitian and Hermitian matrices.
 
+# References
+https://en.wikipedia.org/wiki/Arnoldi_iteration
+
 """
 function arnoldi(A::AbstractMatrix,k::Int=size(A,2))
     # begin with ground state eigenvalue, eigenvector
@@ -39,6 +42,21 @@ function arnoldi(A::AbstractMatrix,k::Int=size(A,2))
     return h,q
 end
 
+"""
+    eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1E-8)
+
+# Arguments
+- `A::AbstractMatrix`
+- `mode::String`
+- `k::Int`
+- `vtol::Number`
+
+# Return 
+
+# Description
+
+
+"""
 function eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1E-8)
 
 
@@ -65,6 +83,7 @@ function eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1
 end
 
 """
+    gs(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
 
 # Arguments
 - ``
@@ -222,6 +241,22 @@ function qr_decomp(A::AbstractMatrix)
    return Q,R
 end
 
+"""
+    round_number!(A::AbstractMatrix;atol::Number=1E-18)
+
+# Arguments
+- ``
+- ``
+- ``
+- ``
+
+
+# Return 
+
+# Description
+
+
+"""
 function round_number!(A::AbstractMatrix;atol::Number=1E-18)
     x,y = size(A)
     for ix in 1:x

@@ -9,10 +9,9 @@ Release dates are mm/dd/yyyy format.
 ## Ideas for the future
 
 ### Adjustments
-- Adaptive time discretization in Runge-Kutta methods.
 - Adaptive integration in methods that require it.
 - QR algorithm should be made implicitly shifted.
-- relative and abaolute tolerances.
+- relative and absolute tolerances.
 
 ### Compute
 - Adjustable CPU/GPU multiprocessing routines/wrappers.
@@ -32,9 +31,28 @@ Release dates are mm/dd/yyyy format.
 ---
 Begin Version History
 ---
+# v0.3.0 (Planned)
+This update focuses on expanding core functionality, basic functionality in matrix operations; keeping scalability in mind. Future updates will adress optomizations to make the package competetive. This has not been tested for breaks with v0.2.0. Breaks should be expected.
+
+## Add
+
+### Source
+- matrices.jl
+    - dot(Matrix)
+    - lpnorm(Matrix)
+    - normalize(Matrix)
+    - det: determinant
+    - MBO: Implement general matrix sizes.
+- matrix_solvers.jl
+    - eig_vals: Add other methods, arnoldi, lanczos, modularize (TODO)
+    - absolute and relative tolerances
+- polynomial.jl
+    - polyroots: modularize methods
+    - newton_roots
+    - companion_roots
 
 # v0.2.0 (Unreleased)
-This update focuses on expanding core functionality; keeping scalability in mind. Future updates will adress optomizations to make the package competetive. This has not been tested for breaks with v0.1.0. Breaks should be expected.
+This update focuses on expanding core functionality, basic functionality in diffeq solvers; keeping scalability in mind. Future updates will adress optomizations to make the package competetive. This has not been tested for breaks with v0.1.0. Breaks should be expected.
 
 ## Added
 
@@ -49,6 +67,7 @@ This update focuses on expanding core functionality; keeping scalability in mind
     - insertion_sort
     - merge_sort
 - diffeq_solvers.jl
+    - ode: Wrapper for solvers. (TODO)
     - rk1: Runge-Kutta order 1.
     - rk2
     - rk23 (TODO)
@@ -65,8 +84,7 @@ This update focuses on expanding core functionality; keeping scalability in mind
     - normalize
     - tr
 - matrix_solvers.jl
-    - eig_vals: Returns eigenvalues of a matrix using QR.   
-        - add other methods, arnoldi, lanczos (TODO)
+    - eig_vals: Returns eigenvalues of a matrix using QR. 
     - qr_decomp: Accepts rectangular matrices.
     - round_number!: Rounds elements of a matrix to 0.
 - polynomial.jl
