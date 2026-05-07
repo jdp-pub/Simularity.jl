@@ -10,11 +10,10 @@
 Upper Hessenberg form of A and the eivenvectors. 
 
 # Description
-Useful for non-Hermitian and Hermitian matrices.
+Useful for non-Hermitian and Hermitian matrices[^Arnoldi_iteration].
 
 # References
-https://en.wikipedia.org/wiki/Arnoldi_iteration
-
+[^Arnoldi_iteration]: [Arnoldi Iteration, https://en.wikipedia.org/wiki/Arnoldi_iteration (May 07, 2026).](https://en.wikipedia.org/wiki/Arnoldi_iteration)
 """
 function arnoldi(A::AbstractMatrix,k::Int=size(A,2))
     # begin with ground state eigenvalue, eigenvector
@@ -52,9 +51,13 @@ end
 - `vtol::Number`
 
 # Return 
+An array of eigenvalues for the matrix A.
 
 # Description
+Currently uses QR algorithm for determining eigenvalues[^QR_algorithm].
 
+# References
+[^QR_algorithm]: [QR Algorithm, https://en.wikipedia.org/wiki/QR_algorithm (May 07, 2026).](https://en.wikipedia.org/wiki/QR_algorithm)
 
 """
 function eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1E-8)
@@ -86,16 +89,18 @@ end
     gs(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
 
 # Arguments
-- ``
-- ``
-- ``
-- ``
-
+- `A::AbstractMatrix`: Thee matrix of interest.
+- `x::AbstractVector`: Initial guess, the closer the guess the faster is convergence.
+- `vtol::Number`: Convergence tolerance.
 
 # Return 
+The smallest eigenvalue and the corresponding eigenstate.
 
 # Description
+Currently uses the variational method to find the lowest eigenvalue and corresponding eigenvector[^Variational_method].
 
+# References
+[^Variational_method]: [Variational Method (Quantum Mechanics), https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics) (May 07, 2026).](https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics))
 
 """
 function gs(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
@@ -131,7 +136,10 @@ end
 Tridiagonal form of A and the eigenvectors.
 
 # Description
-Useful for hermitian matrices, faster than other methods in the valid case. 
+Useful for hermitian matrices, faster than other methods in the valid case[^Lanczos_algorithm]. 
+
+# References
+[^Lanczos_algorithm]: [Lanczos Algorithm, https://en.wikipedia.org/wiki/Lanczos_algorithm(May 07, 2026).](https://en.wikipedia.org/wiki/Lanczos_algorithm))
 
 """
 function lanczos(A::AbstractMatrix,k::Int=size(A,2))
@@ -179,9 +187,10 @@ Largest magnitude complex eigenvalue with its unit eigenvector of A.
 
 # Description
 This is a stochastic method unless an initial guess is supplied. 
-Best suited for a getting single eigen value/vector quickly.
+Best suited for a getting single eigen value/vector quickly[^Power_iteration].
 
-
+# References
+[^Power_iteration]: [Power Iteration, https://en.wikipedia.org/wiki/Power_iteration (May 07, 2026).](https://en.wikipedia.org/wiki/Power_iteration)
 """
 function power_iteration(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
     kx = 0
@@ -210,7 +219,10 @@ end
 A unitary matrix and an upper triangular matrix.
 
 # Description
-QR decomposition. Useful for performing higher level operations.
+QR decomposition[^QR_decomposition]. Useful for performing higher level operations.
+
+# References
+[^QR_decomposition]: [QR_decomposition, https://en.wikipedia.org/wiki/QR_decomposition (May 07, 2026).](https://en.wikipedia.org/wiki/QR_decomposition)
 
 """
 function qr_decomp(A::AbstractMatrix)
@@ -245,16 +257,15 @@ end
     round_number!(A::AbstractMatrix;atol::Number=1E-18)
 
 # Arguments
-- ``
-- ``
-- ``
-- ``
+- `A::AbstractMatrix`: The matrix to operate on.
+- `atol::Number`: The magnitude at which numbers should be rounded to 0.
 
 
 # Return 
+Mutates the input matrix in place. 
 
 # Description
-
+Roundes all elements of a matrix to 0 below a specified threshold.
 
 """
 function round_number!(A::AbstractMatrix;atol::Number=1E-18)

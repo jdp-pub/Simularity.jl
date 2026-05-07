@@ -8,7 +8,7 @@
 The diagonal elements of a matrix as an array[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 diag(A::AbstractMatrix) = [A[xn,xn] for xn in 1:minimum(size(A))]
@@ -40,7 +40,7 @@ dot(a::AbstractArray,b::AbstractArray) = sum(a.*b)
 nxn identity matrix[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 function I(n::Int=2)
@@ -116,7 +116,7 @@ lpnorm(A::AbstractArray,p::Number=2) = (sum(abs.(A).^p))^(1. /p)
 A normalized array[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 normalize(x::AbstractVector,p::Int=2) = x./lpnorm(x,p)
@@ -131,7 +131,7 @@ normalize(x::AbstractVector,p::Int=2) = x./lpnorm(x,p)
 The trace of matrix A[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 tr(A::AbstractMatrix) = sum(diag(A))
