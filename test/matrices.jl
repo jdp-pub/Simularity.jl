@@ -8,7 +8,7 @@
 The diagonal elements of a matrix as an array[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (accessed May 5, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 diag(A::AbstractMatrix) = [A[xn,xn] for xn in 1:minimum(size(A))]
@@ -24,7 +24,7 @@ diag(A::AbstractMatrix) = [A[xn,xn] for xn in 1:minimum(size(A))]
 The dot product of two arrays[^Dot_product].
 
 # References
-[^Dot_product]: [Dot Product, https://en.wikipedia.org/wiki/Dot_product (May 05, 2026).](https://en.wikipedia.org/wiki/Dot_product)
+[^Dot_product]: [Dot Product, https://en.wikipedia.org/wiki/Dot_product (accessed May 5, 2026).](https://en.wikipedia.org/wiki/Dot_product)
 
 """
 dot(a::AbstractArray,b::AbstractArray) = sum(a.*b)
@@ -40,7 +40,7 @@ dot(a::AbstractArray,b::AbstractArray) = sum(a.*b)
 nxn identity matrix[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (accessed May 5, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 function I(n::Int=2)
@@ -63,7 +63,7 @@ end
 Many body operator as a matrix[^Second_quantization].
 
 # References
-[^Second_quantization]: [Second Quantization, https://en.wikipedia.org/wiki/Second_quantization (May 05, 2026).](https://en.wikipedia.org/wiki/Second_quantization)
+[^Second_quantization]: [Second Quantization, https://en.wikipedia.org/wiki/Second_quantization (accessed May 5, 2026).](https://en.wikipedia.org/wiki/Second_quantization)
 
 """
 function MBO(Ol::AbstractArray,pos::AbstractArray,l::Int)
@@ -100,7 +100,7 @@ The norm of the array[^Norm_(mathematics)].
 
 
 # References
-[^Norm_(mathematics)]: [Norm (Mathematics), https://en.wikipedia.org/wiki/Norm_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Norm_(mathematics))
+[^Norm_(mathematics)]: [Norm (Mathematics), https://en.wikipedia.org/wiki/Norm_(mathematics) (accessed May 5, 2026).](https://en.wikipedia.org/wiki/Norm_(mathematics))
 
 """
 lpnorm(A::AbstractArray,p::Number=2) = (sum(abs.(A).^p))^(1. /p)
@@ -116,7 +116,7 @@ lpnorm(A::AbstractArray,p::Number=2) = (sum(abs.(A).^p))^(1. /p)
 A normalized array[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (accessed May 5, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 normalize(x::AbstractVector,p::Int=2) = x./lpnorm(x,p)
@@ -131,7 +131,7 @@ normalize(x::AbstractVector,p::Int=2) = x./lpnorm(x,p)
 The trace of matrix A[^Matrix_(mathematics)].
 
 # References
-[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (May 05, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
+[^Matrix_(mathematics)]: [Matrix (Mathematics), https://en.wikipedia.org/wiki/Matrix_(mathematics) (accessed May 5, 2026).](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
 """
 tr(A::AbstractMatrix) = sum(diag(A))

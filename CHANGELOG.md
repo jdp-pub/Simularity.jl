@@ -38,7 +38,8 @@ This update focuses on expanding core functionality, basic functionality in matr
 
 ### Source
 - matrices.jl
-    - dot(Matrix)
+    - dot(Matrix): Frobenius inner product.
+    - contract(Matrix)
     - lpnorm(Matrix)
     - normalize(Matrix)
     - det: determinant
@@ -95,17 +96,22 @@ This update focuses on expanding core functionality, basic functionality in diff
     - polyroots
 
 ### Test
-- test.sh: test modularization with flags
-    - ability to run all tests
+- test.sh: tests with flags
+    - cmd to run all tests
     - run all tests with code coverage
-    - add modular testing (TODO)
 
 ### Website (TODO)
 A new website was made using Documenter.jl for code documentation.
     - link CHANGELOG.md to website (TODO).
 
 ### Tests
-All functions were tested and tested again. (TODO)
+    - array_sorts.jl
+    - compare.jl
+    - diffeq_solvers.jl (TODO)
+    - integrate.jl
+    - matrices.jl
+    - matrix_solvers.jl (TODO)
+    - polynomial.jl (TODO)
 
 ## Changed
 

@@ -13,7 +13,7 @@ Upper Hessenberg form of A and the eivenvectors.
 Useful for non-Hermitian and Hermitian matrices[^Arnoldi_iteration].
 
 # References
-[^Arnoldi_iteration]: [Arnoldi Iteration, https://en.wikipedia.org/wiki/Arnoldi_iteration (May 07, 2026).](https://en.wikipedia.org/wiki/Arnoldi_iteration)
+[^Arnoldi_iteration]: [Arnoldi Iteration, https://en.wikipedia.org/wiki/Arnoldi_iteration (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Arnoldi_iteration)
 """
 function arnoldi(A::AbstractMatrix,k::Int=size(A,2))
     # begin with ground state eigenvalue, eigenvector
@@ -57,7 +57,7 @@ An array of eigenvalues for the matrix A.
 Currently uses QR algorithm for determining eigenvalues[^QR_algorithm].
 
 # References
-[^QR_algorithm]: [QR Algorithm, https://en.wikipedia.org/wiki/QR_algorithm (May 07, 2026).](https://en.wikipedia.org/wiki/QR_algorithm)
+[^QR_algorithm]: [QR Algorithm, https://en.wikipedia.org/wiki/QR_algorithm (accessed May 7, 2026).](https://en.wikipedia.org/wiki/QR_algorithm)
 
 """
 function eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1E-8)
@@ -100,7 +100,7 @@ The smallest eigenvalue and the corresponding eigenstate.
 Currently uses the variational method to find the lowest eigenvalue and corresponding eigenvector[^Variational_method].
 
 # References
-[^Variational_method]: [Variational Method (Quantum Mechanics), https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics) (May 07, 2026).](https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics))
+[^Variational_method]: [Variational Method (Quantum Mechanics), https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics) (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics))
 
 """
 function gs(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
@@ -139,7 +139,7 @@ Tridiagonal form of A and the eigenvectors.
 Useful for hermitian matrices, faster than other methods in the valid case[^Lanczos_algorithm]. 
 
 # References
-[^Lanczos_algorithm]: [Lanczos Algorithm, https://en.wikipedia.org/wiki/Lanczos_algorithm(May 07, 2026).](https://en.wikipedia.org/wiki/Lanczos_algorithm))
+[^Lanczos_algorithm]: [Lanczos Algorithm, https://en.wikipedia.org/wiki/Lanczos_algorithm (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Lanczos_algorithm))
 
 """
 function lanczos(A::AbstractMatrix,k::Int=size(A,2))
@@ -190,7 +190,7 @@ This is a stochastic method unless an initial guess is supplied.
 Best suited for a getting single eigen value/vector quickly[^Power_iteration].
 
 # References
-[^Power_iteration]: [Power Iteration, https://en.wikipedia.org/wiki/Power_iteration (May 07, 2026).](https://en.wikipedia.org/wiki/Power_iteration)
+[^Power_iteration]: [Power Iteration, https://en.wikipedia.org/wiki/Power_iteration (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Power_iteration)
 """
 function power_iteration(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
     kx = 0
@@ -222,7 +222,7 @@ A unitary matrix and an upper triangular matrix.
 QR decomposition[^QR_decomposition]. Useful for performing higher level operations.
 
 # References
-[^QR_decomposition]: [QR_decomposition, https://en.wikipedia.org/wiki/QR_decomposition (May 07, 2026).](https://en.wikipedia.org/wiki/QR_decomposition)
+[^QR_decomposition]: [QR_decomposition, https://en.wikipedia.org/wiki/QR_decomposition (accessed May 7, 2026).](https://en.wikipedia.org/wiki/QR_decomposition)
 
 """
 function qr_decomp(A::AbstractMatrix)

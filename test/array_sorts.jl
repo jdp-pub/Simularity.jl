@@ -17,9 +17,9 @@ and is best used as a way to quickly partially order lists, most relevant in
 certain simulation tasks[^depth-sorting-of-billboard-particles-how-can-i-do-it]
 
 # References
-[^bubble-sort]: [Bubble Sort, https://en.wikipedia.org/wiki/Bubble_sort (accessed 4 14, 2026).](https://en.wikipedia.org/wiki/Bubble_sort)
-[^when-would-you-ever-want-bubblesort]: [When Would You Ever Want Bubble Sort?, https://buttondown.com/hillelwayne/archive/when-would-you-ever-want-bubblesort/ (accessed 4 14, 2026).](https://buttondown.com/hillelwayne/archive/when-would-you-ever-want-bubblesort/)
-[^depth-sorting-of-billboard-particles-how-can-i-do-it]: [Depth Sorting of Billboard Particles, How Can I Do It?, https://discussions.unity.com/t/depth-sorting-of-billboard-particles-how-can-i-do-it/5053 (accessed 4 14, 2026).](https://discussions.unity.com/t/depth-sorting-of-billboard-particles-how-can-i-do-it/5053). 
+[^bubble-sort]: [Bubble Sort, https://en.wikipedia.org/wiki/Bubble_sort (accessed April 14, 2026).](https://en.wikipedia.org/wiki/Bubble_sort)
+[^when-would-you-ever-want-bubblesort]: [When Would You Ever Want Bubble Sort?, https://buttondown.com/hillelwayne/archive/when-would-you-ever-want-bubblesort/ (accessed April 14, 2026).](https://buttondown.com/hillelwayne/archive/when-would-you-ever-want-bubblesort/)
+[^depth-sorting-of-billboard-particles-how-can-i-do-it]: [Depth Sorting of Billboard Particles, How Can I Do It?, https://discussions.unity.com/t/depth-sorting-of-billboard-particles-how-can-i-do-it/5053 (accessed April 14, 2026).](https://discussions.unity.com/t/depth-sorting-of-billboard-particles-how-can-i-do-it/5053). 
 """
 function bubble_sort(A::AbstractArray;k::AbstractFloat=1.,mode::String="AS")
     V = A
@@ -64,8 +64,10 @@ end
 A sorted array.
 
 # Description
+As the array is iterated, the elements are places in their proper relative position[^Insertion_sort]. 
 
 # References
+[^Insertion_sort]: [Insertion Sort, https://en.wikipedia.org/wiki/Insertion_sort (accessed May 11, 2026).](https://en.wikipedia.org/wiki/Insertion_sort)
 """
 function insertion_sort(A::AbstractArray;mode::String="AS")
     V = A
@@ -99,8 +101,10 @@ end
 A sorted array.
 
 # Description
+Divide and conquer method. Splits array into subunits, then sorts the subunits as they are rejoined.[^Merge_sort]
 
 # References
+[^Merge_sort]: [Merge Sort, https://en.wikipedia.org/wiki/Merge_sort (accessed May 11, 2026).](https://en.wikipedia.org/wiki/Merge_sort)
 """
 function merge_sort(A::AbstractArray;mode::String="AS")
     if length(A) == 1

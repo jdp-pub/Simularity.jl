@@ -3,7 +3,52 @@ using Test
 
 @testset "Simularity.jl" begin
 
-    # Integration
+    # --- #
+    # array_sorts.jl
+    
+    ## small predetermined array
+    ### ascending
+    A = [3,6,2,4]
+    @test Simularity.bubble_sort(A) == [2,3,4,6]
+
+    A = [8.45,9,78.6,34,5.76,4.39,8.57,6]
+    @test Simularity.bubble_sort(A) == [4.39,5.76,6,8.45,8.57,9,34,78.6]
+
+    A = [2,8,5,3,9,4]
+    @test Simularity.insertion_sort(A) == [2,3,4,5,8,9]
+
+    A = [2, 1, 4, 3]
+    @test Simularity.merge_sort(A) == [1, 2, 3, 4]
+
+
+    ### descending
+    A = [3,6,2,4]
+    @test Simularity.bubble_sort(A,mode="DS") == reverse([2,3,4,6])
+
+    A = [8.45,9,78.6,34,5.76,4.39,8.57,6]
+    @test Simularity.bubble_sort(A,mode="DS") == reverse([4.39,5.76,6,8.45,8.57,9,34,78.6])
+
+    A = [2,8,5,3,9,4]
+    @test Simularity.insertion_sort(A,mode="DS") == reverse([2,3,4,5,8,9])
+
+    A = [2, 1, 4, 3]
+    @test Simularity.merge_sort(A,mode="DS") == reverse([1, 2, 3, 4])
+
+    # --- #
+    # compare.jl
+
+    # timing large rangom arrays
+    f = [Simularity.bubble_sort]
+    n = 100 # length of random array 
+    nl = rand(n)
+    @test all((Simularity.f_compare(f,[nl]) .< [n^2/1E5]) .== 1)
+
+    # --- #
+    # diffeq_solvers.jl
+
+
+    # --- #
+    # integrate.jl
     
     ## riemann_integration() 
     ### left
@@ -33,7 +78,8 @@ using Test
     @test isapprox(Simularity.riemann_integration(-1:dx:0,[x^2 for x in -1:dx:0],"right"),1/3,atol=1E-8)
     @test isapprox(Simularity.riemann_integration(1:-dx:0,[x^2 for x in 1:-dx:0],"right"),-1/3,atol=1E-8)
 
-    # Matrices
+    # --- #
+    # matrices.jl
     
     ## diag()
     ### Square
@@ -53,18 +99,30 @@ using Test
     y = [4,5,6]
     @test Simularity.dot(x,y) == 32
 
-    ### Matrix dot
-    A = [1 1 1; 2 2 2; 3 3 3]
-    B = [2 2 2; 3 3 3; 4 4 4]
-    @test Simularity.dot(A,B) == 60
-
-    # I()
+    ## I()
     @test Simularity.I() == [1 0; 0 1]
     
     n = 5
     @test Simularity.I(n) == [1 0 0 0 0; 0 1 0 0 0; 0 0 1 0 0; 0 0 0 1 0; 0 0 0 0 1]
     
-    # tr()
+
+    ## MBO()
+    X = [0 1; 1 0]
+    Z = [1 0; 0 -1]
+    I = Simularity.I(2)
+    @test Simularity.MBO([X, Z], [1, 2], 2) == kron(X,Z)
+    @test Simularity.MBO([X, Z], [2, 3], 3) == kron(I,kron(X,Z))
+    @test Simularity.MBO([X, Z], [2, 3], 4) == kron(kron(I,kron(X,Z)),I) 
+
+    ## lpnorm()
+    x = [1, 1]
+    @test Simularity.lpnorm(x) == sqrt(2)
+
+    ## normalize()
+    x = [1, 1]
+    @test Simularity.normalize(x) == [1/sqrt(2), 1/sqrt(2)]
+
+    ## tr()
     ### Square
     A = [1 0 0 0; 3 4 3 3; 4 4 5 4; 6 6 6 7]
     @test Simularity.tr(A) == 17
@@ -123,38 +181,4 @@ using Test
     @test isapprox(R,[sqrt(35) 44*sqrt(35)/35; 0 2*sqrt(210)/35],atol=1E-10)
 
 
-    # Array sorts
-    
-    ## small predetermined array
-    ### ascending
-    A = [3,6,2,4]
-    @test Simularity.bubble_sort(A) == [2,3,4,6]
-
-    A = [8.45,9,78.6,34,5.76,4.39,8.57,6]
-    @test Simularity.bubble_sort(A) == [4.39,5.76,6,8.45,8.57,9,34,78.6]
-
-    A = [2,8,5,3,9,4]
-    @test Simularity.insertion_sort(A) == [2,3,4,5,8,9]
-
-    A = [2, 1, 4, 3]
-    @test Simularity.merge_sort(A) == [1, 2, 3, 4]
-
-
-    ### descending
-    A = [3,6,2,4]
-    @test Simularity.bubble_sort(A,mode="DS") == reverse([2,3,4,6])
-
-    A = [8.45,9,78.6,34,5.76,4.39,8.57,6]
-    @test Simularity.bubble_sort(A,mode="DS") == reverse([4.39,5.76,6,8.45,8.57,9,34,78.6])
-
-    A = [2,8,5,3,9,4]
-    @test Simularity.insertion_sort(A,mode="DS") == reverse([2,3,4,5,8,9])
-
-    A = [2, 1, 4, 3]
-    @test Simularity.merge_sort(A,mode="DS") == reverse([1, 2, 3, 4])
-
-    # timing large rangom arrays
-    #f = [Simularity.bubble_sort]
-    #n = 3 # length of random array  
-    #@test all((Simularity.f_compare(f,n) .< [n^2/1E6]) .== 1)
 end
