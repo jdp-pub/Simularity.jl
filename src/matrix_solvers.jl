@@ -1,19 +1,21 @@
 
 """
-    arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    arnoldi(A::AbstractMatrix,k::Int=size(A,2))
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: The matrix of interest.
+- `A::AbstractMatrix`: The matrix of interest.
 - `k::Int`: The number of eigenvectors to consider in the subspace. 
 
 # Return 
 Upper Hessenberg form of A and the eivenvectors. 
 
 # Description
-Useful for non-Hermitian and Hermitian matrices.
+Useful for non-Hermitian and Hermitian matrices[^Arnoldi_iteration].
 
+# References
+[^Arnoldi_iteration]: [Arnoldi Iteration, https://en.wikipedia.org/wiki/Arnoldi_iteration (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Arnoldi_iteration)
 """
-function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+function arnoldi(A::AbstractMatrix,k::Int=size(A,2))
     # begin with ground state eigenvalue, eigenvector
     E,p = gs(A)
     v = []
@@ -39,7 +41,26 @@ function arnoldi(A::AbstractMatrix{<:Number},k::Int=size(A,2))
     return h,q
 end
 
-function eig_vals(A::AbstractMatrix{<:Number};mode::String="qr",k::Int=1000,vtol::Number=1E-8)
+"""
+    eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1E-8)
+
+# Arguments
+- `A::AbstractMatrix`
+- `mode::String`
+- `k::Int`
+- `vtol::Number`
+
+# Return 
+An array of eigenvalues for the matrix A.
+
+# Description
+Currently uses QR algorithm for determining eigenvalues[^QR_algorithm].
+
+# References
+[^QR_algorithm]: [QR Algorithm, https://en.wikipedia.org/wiki/QR_algorithm (accessed May 7, 2026).](https://en.wikipedia.org/wiki/QR_algorithm)
+
+"""
+function eig_vals(A::AbstractMatrix;mode::String="qr",k::Int=1000,vtol::Number=1E-8)
 
 
     if mode == "qr"
@@ -65,21 +86,24 @@ function eig_vals(A::AbstractMatrix{<:Number};mode::String="qr",k::Int=1000,vtol
 end
 
 """
+    gs(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
 
 # Arguments
-- ``
-- ``
-- ``
-- ``
-
+- `A::AbstractMatrix`: Thee matrix of interest.
+- `x::AbstractVector`: Initial guess, the closer the guess the faster is convergence.
+- `vtol::Number`: Convergence tolerance.
 
 # Return 
+The smallest eigenvalue and the corresponding eigenstate.
 
 # Description
+Currently uses the variational method to find the lowest eigenvalue and corresponding eigenvector[^Variational_method].
 
+# References
+[^Variational_method]: [Variational Method (Quantum Mechanics), https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics) (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics))
 
 """
-function gs(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
+function gs(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),vtol::Number=1E-8)
     #findes the smallest eigenvalue and eigenvector 
     #using the variational method
 
@@ -102,20 +126,23 @@ function gs(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(ran
 end
 
 """
-    lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    lanczos(A::AbstractMatrix,k::Int=size(A,2))
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: The matrix of interest.
+- `A::AbstractMatrix`: The matrix of interest.
 - `k::Int`: The number of eigenvectors to consider in the subspace. 
 
 # Return 
 Tridiagonal form of A and the eigenvectors.
 
 # Description
-Useful for hermitian matrices, faster than other methods in the valid case. 
+Useful for hermitian matrices, faster than other methods in the valid case[^Lanczos_algorithm]. 
+
+# References
+[^Lanczos_algorithm]: [Lanczos Algorithm, https://en.wikipedia.org/wiki/Lanczos_algorithm (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Lanczos_algorithm))
 
 """
-function lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+function lanczos(A::AbstractMatrix,k::Int=size(A,2))
     # begin with ground state
     E,p = gs(A)
 
@@ -146,11 +173,11 @@ function lanczos(A::AbstractMatrix{<:Number},k::Int=size(A,2))
 end
 
 """
-    power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
+    power_iteration(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: The matrix to be examined.
-- `x::AbstractVector{<:Number}`: Guess for eigenvector, helps with convergence.
+- `A::AbstractMatrix`: The matrix to be examined.
+- `x::AbstractVector`: Guess for eigenvector, helps with convergence.
 - `k::Int`: Maximum iterations for convergence
 - `vtol::Float`: Convergence tolerance. 
 
@@ -160,11 +187,12 @@ Largest magnitude complex eigenvalue with its unit eigenvector of A.
 
 # Description
 This is a stochastic method unless an initial guess is supplied. 
-Best suited for a getting single eigen value/vector quickly.
+Best suited for a getting single eigen value/vector quickly[^Power_iteration].
 
-
+# References
+[^Power_iteration]: [Power Iteration, https://en.wikipedia.org/wiki/Power_iteration (accessed May 7, 2026).](https://en.wikipedia.org/wiki/Power_iteration)
 """
-function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
+function power_iteration(A::AbstractMatrix,x::AbstractVector=complex.(rand(Float64,size(A,1))),k::Int=100,vtol::Number=1E-6)
     kx = 0
     xtemp = x
     dottemp = NaN 
@@ -182,19 +210,22 @@ function power_iteration(A::AbstractMatrix{<:Number},x::AbstractVector{<:Number}
 end
 
 """
-    qr_decomp(A::AbstractMatrix{<:Number},k::Int=size(A,2))
+    qr_decomp(A::AbstractMatrix,k::Int=size(A,2))
 
 # Arguments
-- `A::AbstractMatrix{<:Number}`: An invertible square matrix.
+- `A::AbstractMatrix`: An invertible square matrix.
 
 # Return 
 A unitary matrix and an upper triangular matrix.
 
 # Description
-QR decomposition. Useful for performing higher level operations.
+QR decomposition[^QR_decomposition]. Useful for performing higher level operations.
+
+# References
+[^QR_decomposition]: [QR_decomposition, https://en.wikipedia.org/wiki/QR_decomposition (accessed May 7, 2026).](https://en.wikipedia.org/wiki/QR_decomposition)
 
 """
-function qr_decomp(A::AbstractMatrix{<:Number})
+function qr_decomp(A::AbstractMatrix)
     krow,kcol = size(A)
 
     # integers are cast to float, complex operation retained
@@ -222,6 +253,21 @@ function qr_decomp(A::AbstractMatrix{<:Number})
    return Q,R
 end
 
+"""
+    round_number!(A::AbstractMatrix;atol::Number=1E-18)
+
+# Arguments
+- `A::AbstractMatrix`: The matrix to operate on.
+- `atol::Number`: The magnitude at which numbers should be rounded to 0.
+
+
+# Return 
+Mutates the input matrix in place. 
+
+# Description
+Roundes all elements of a matrix to 0 below a specified threshold.
+
+"""
 function round_number!(A::AbstractMatrix;atol::Number=1E-18)
     x,y = size(A)
     for ix in 1:x

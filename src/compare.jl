@@ -23,7 +23,7 @@ function f_compare(func_list::AbstractArray,n::AbstractArray,avg_n::Int=10)
 
     for fx in 1:length(func_list)
         for tx in 1:avg_n
-            time_avg[tx] = @belapsed $func_list[fx]($n[fx])
+            time_avg[tx] = @belapsed $func_list[$fx]($n[$fx])
         end
         times[fx] = mean(time_avg)
     end
