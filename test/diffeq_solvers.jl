@@ -1,5 +1,5 @@
 """
-    glrk(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,kn::Int=10,fargs::AbstractVector=[])
+    glrk(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::AbstractVector=[],xn::Int=100000)
 
 # Arguments
 - `f`: Function that describes dynamical system. 
@@ -9,6 +9,7 @@
 - `n::Int`: The number of timesteps.
 - `s::Int`: Runge-Kutta stages.
 - `fargs::AbstractVector`: Additional parameters to pass to f.
+- `xn::Int`: Resolution of the lagrange polynomial integration.
 
 
 # Return 
@@ -84,6 +85,7 @@ end
 - `n::Int`: The number of timesteps.
 - `s::Int`: Runge-Kutta stages.
 - `fargs::AbstractVector`: Additional parameters to pass to f.
+- `xn::Int`: Resolution of the lagrange polynomial integration.
 
 
 # Return 
@@ -410,23 +412,26 @@ as an array of ODEs. This method has an adaptive time step.
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
 
 """
-function rk45(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+function rk45(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[]) 
 
-    y = y0
-    yt4 = y
-    yt5 = y
-    
-    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
     yl[1,:] = y0
 
     t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
+
+
+    # 4th order
+    yt4 = y0
+    yl4 = Array{typeof(y0[1]),2}(undef,n,length(y0))
 
     k14 = typeof(y0)(undef,size(y0))
     k24 = typeof(y0)(undef,size(y0))
     k34 = typeof(y0)(undef,size(y0))
     k44 = typeof(y0)(undef,size(y0))
 
+    # 5th order
+    yt5 = y0
+    yl4 = Array{typeof(y0[1]),2}(undef,n,length(y0))
 
     k15 = typeof(y0)(undef,size(y0))
     k25 = typeof(y0)(undef,size(y0))
@@ -437,33 +442,51 @@ function rk45(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs:
     # - match dormand price coefficients
     # - add adaptive step
     for nx in 2:n
-        k14 = f(y,t[nx],fargs).*dt
 
-        yt4 = y + k1/2
+        # 4th order solution
+        k14 = f(y4,t[nx],fargs).*dt
+
+        yt4 = y4 + k1/2
         k24 = f(yt,t[nx]+dt/2,fargs).*dt
 
-        yt4 = y + k2/2
-        k34 = f(yt,t[nx]+dt/2,fargs).*dt
+        yt4 = y4 + k2/2
+        k34 = f(yt4,t[nx]+dt/2,fargs).*dt
 
-        yt4 = y + k3
-        k44 = f(yt,t[nx]+dt,fargs).*dt
+        yt4 = y4 + k3
+        k44 = f(yt4,t[nx]+dt,fargs).*dt
 
-        k15 = f(y,t[nx],fargs).*dt
-
-        yt5 = y + k1/2
-        k25 = f(yt,t[nx]+dt/2,fargs).*dt
-
-        yt5 = y + k2/2
-        k35 = f(yt,t[nx]+dt/2,fargs).*dt
-
-        yt5 = y + k3
-        k45 = f(yt,t[nx]+dt,fargs).*dt
-
+        y4 = y4 + (k14 + 2*k24 + 2*k34 + k44)/6
         
 
-        y = y + (k1 + 2*k2 + 2*k3 + k4)/6
+        # 5th order solution
+        k15 = f(y5,t[nx],fargs).*dt
 
-        yl[nx,:] = y
+        
+        yt5 = y5 + k1/2
+        k25 = f(yt5,t[nx]+dt/2,fargs).*dt
+
+        yt5 = y5 + k2/2
+        k35 = f(yt5,t[nx]+dt/2,fargs).*dt
+
+        yt5 = y5 + k3
+        k45 = f(yt5,t[nx]+dt,fargs).*dt
+
+        y5 = y5 + (k15 + 2*k25 + 2*k35 + k45)/6
+   
+        err = (y4-y5)./2
+
+        if err .> 1E-8
+            nx = nx-1
+            dt = dt/10
+            continue
+        elseif  err .< 1E-14
+            nx = nx-1
+            dt = dt*10
+            continue
+        else 
+            yl[nx,:] = y
+        end
+
     end
 
     
