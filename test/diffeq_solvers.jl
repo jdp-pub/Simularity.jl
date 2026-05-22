@@ -30,10 +30,10 @@ function glrk(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::Int
     y = y0
     yt = y
     
-    yl = Vector{typeof(y0)}(undef,n)
-    yl[1] = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    yl[1,:] = y0
 
-    t = range(ti,tf,n)
+    t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
     # calculating the butcher-tableau may need to be moved to its own function
@@ -66,11 +66,11 @@ function glrk(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::Int
         yi = [y + sum([aij[i,j]*f(y,t[nx],fargs) for j in 1:length(roots)])*dt for i in 1:length(roots)]
         y = y + sum([bi[i]*f(y,t[nx],fargs) for i in 1:length(roots)])*dt
 
-        yl[nx] = y
+        yl[nx,:] = y
     end
 
-    ytl = [[row[i] for row in yl] for i in 1:length(yl[1])]
-    return ytl,t
+    
+    return yl,t
 end
 
 """
@@ -105,10 +105,10 @@ function glrka(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::In
     y = y0
     yt = y
     
-    yl = Vector{typeof(y0)}(undef,n)
-    yl[1] = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    yl[1,:] = y0
 
-    t = range(ti,tf,n)
+    t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
     # calculating the butcher-tableau may need to be moved to its own function
@@ -159,11 +159,11 @@ function glrka(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::In
         yi = [y + sum([aij[i,j]*f(y,t[nx],fargs) for j in 1:length(roots)])*dt for i in 1:length(roots)]
         y = y + sum([bi[i]*f(y,t[nx],fargs) for i in 1:length(roots)])*dt
 
-        yl[nx] = y
+        yl[nx,:] = y
     end
 
-    ytl = [[row[i] for row in yl] for i in 1:length(yl[1])]
-    return ytl,t
+    
+    return yl,t
 end
 
 """
@@ -193,10 +193,10 @@ function rk1(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
     y = y0
     yt = y
     
-    yl = Vector{typeof(y0)}(undef,n)
-    yl[1] = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    yl[1,:] = y0
 
-    t = range(ti,tf,n)
+    t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
     k1 = typeof(y0)(undef,n)
@@ -204,11 +204,11 @@ function rk1(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
 
     for nx in 2:n
         y = y + f(yt,t[nx],fargs).*dt
-        yl[nx] = y
+        yl[nx,:] = y
     end
 
-    ytl = [[row[i] for row in yl] for i in 1:length(yl[1])]
-    return ytl,t
+    
+    return yl,t
 end
 
 
@@ -240,10 +240,10 @@ function rk2(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
     y = y0
     yt = y
     
-    yl = Vector{typeof(y0)}(undef,n)
-    yl[1] = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    yl[1,:] = y0
 
-    t = range(ti,tf,n)
+    t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
     k1 = typeof(y0)(undef,n)
@@ -257,11 +257,11 @@ function rk2(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
 
         y = y + (k1 + k2)/2
 
-        yl[nx] = y
+        yl[nx,:] = y
     end
 
-    ytl = [[row[i] for row in yl] for i in 1:length(yl[1])]
-    return ytl,t
+    
+    return yl,t
 end
 
 
@@ -294,10 +294,10 @@ function rk3(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
     y = y0
     yt = y
     
-    yl = Vector{typeof(y0)}(undef,n)
-    yl[1] = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    yl[1,:] = y0
 
-    t = range(ti,tf,n)
+    t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
     k1 = typeof(y0)(undef,n)
@@ -316,11 +316,11 @@ function rk3(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
 
         y = y + (k1 + 4k2 + k3)/6
 
-        yl[nx] = y
+        yl[nx,:] = y
     end
 
-    ytl = [[row[i] for row in yl] for i in 1:length(yl[1])]
-    return ytl,t
+    
+    return yl,t
 end
 
 """
@@ -351,16 +351,17 @@ function rk4(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
     y = y0
     yt = y
     
-    yl = Vector{typeof(y0)}(undef,n)
-    yl[1] = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0)) 
+    yl[1,:] = y0
 
-    t = range(ti,tf,n)
+    t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
-    k1 = typeof(y0)(undef,n)
-    k2 = typeof(y0)(undef,n)
-    k3 = typeof(y0)(undef,n)
-    k4 = typeof(y0)(undef,n)
+    k1 = typeof(y0)(undef,size(y0))
+    k2 = typeof(y0)(undef,size(y0))
+    k3 = typeof(y0)(undef,size(y0))
+    k4 = typeof(y0)(undef,size(y0))
+
 
     for nx in 2:n
         k1 = f(y,t[nx],fargs).*dt
@@ -376,11 +377,11 @@ function rk4(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
 
         y = y + (k1 + 2*k2 + 2*k3 + k4)/6
 
-        yl[nx] = y
+        yl[nx,:] = y
     end
 
-    ytl = [[row[i] for row in yl] for i in 1:length(yl[1])]
-    return ytl,t
+    #
+    return yl,t
 end
 
 """
@@ -415,10 +416,10 @@ function rk45(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs:
     yt4 = y
     yt5 = y
     
-    yl = Vector{typeof(y0)}(undef,n)
-    yl[1] = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    yl[1,:] = y0
 
-    t = range(ti,tf,n)
+    t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
     k14 = typeof(y0)(undef,size(y0))
@@ -462,11 +463,11 @@ function rk45(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs:
 
         y = y + (k1 + 2*k2 + 2*k3 + k4)/6
 
-        yl[nx] = y
+        yl[nx,:] = y
     end
 
-    ytl = [[row[i] for row in yl] for i in 1:length(yl[1])]
-    return ytl,t
+    
+    return yl,t
 end
 
 
