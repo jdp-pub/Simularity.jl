@@ -415,63 +415,62 @@ as an array of ODEs. This method has an adaptive time step.
 https://www.youtube.com/watch?v=6bCBXvsD7gw
 """
 function rkdp(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,fargs::AbstractVector=[],vtol::AbstractFloat=1E-10,s::AbstractFloat=0.9) 
+    t = ti
+    dt = 1/1000
+    tl = [ti]
 
-    n = 1000000
-    t = collect(range(ti,tf,n))
-    dt = t[2]-t[1]
-
-    y = y0
-    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    y = Array{typeof(y0[1]),2}(undef,1,length(y0))
+    y[:] = y0
+    yl = Array{typeof(y0[1]),2}(undef,1,length(y0))
     yl[1,:] = y0
 
-    k1 = typeof(y0)(undef,size(y0))
-    k2 = typeof(y0)(undef,size(y0))
-    k3 = typeof(y0)(undef,size(y0))
-    k4 = typeof(y0)(undef,size(y0))
-    k5 = typeof(y0)(undef,size(y0))
-    k6 = typeof(y0)(undef,size(y0))
-    k7 = typeof(y0)(undef,size(y0))
+    k1 = typeof(y)(undef,size(y))
+    k2 = typeof(y)(undef,size(y))
+    k3 = typeof(y)(undef,size(y))
+    k4 = typeof(y)(undef,size(y))
+    k5 = typeof(y)(undef,size(y))
+    k6 = typeof(y)(undef,size(y))
+    k7 = typeof(y)(undef,size(y))
 
-
-    for nx in 2:n
-        k1 = f(y,t[nx],fargs).*dt
+    nx = 2
+    while t < tf
+        k1 = f(y,t,fargs).*dt
 
         yt = y + k1/5
-        k2 = f(yt,t[nx]+dt/5,fargs).*dt
+        k2 = f(yt,t+dt/5,fargs).*dt
 
         yt = y + 3*k1/40 + 9*k2/40
-        k3 = f(yt,t[nx]+3*dt/10,fargs).*dt
+        k3 = f(yt,t+3*dt/10,fargs).*dt
 
-        yt = y + 44*k1/45 - 56*k2/15 + 32*k3/39
-        k4 = f(yt,t[nx]+4*dt/5,fargs).*dt
+        yt = y + 44*k1/45 - 56*k2/15 + 32*k3/9
+        k4 = f(yt,t+4*dt/5,fargs).*dt
 
         yt = y + 19372*k1/6561 − 25360*k2/2187 + 64448*k3/6561 − 212*k4/729
-        k5 = f(yt,t[nx]+8*dt/9,fargs).*dt
+        k5 = f(yt,t+8*dt/9,fargs).*dt
        
         yt = y + 9017*k1/3168 − 355*k2/33 + 46732*k3/5247 + 49*k4/176 − 5103*k5/18656
-        k6 = f(yt,t[nx]+dt,fargs).*dt
+        k6 = f(yt,t+dt,fargs).*dt
 
         yt = y + 35*k1/384 + 0*k2 + 500*k3/1113 + 125*k4/192 − 2187*k5/6784 + 11*k6/84
-        k7 = f(yt,t[nx]+dt,fargs).*dt
+        k7 = f(yt,t+dt,fargs).*dt
 
         # 5th order solution
-        y5 = y .+ (35*k1/384 + 0*k2 + 500*k3/1113 + 125*k4/192 − 2187*k5/6784 + 11*k6/84 + 0*k7)
+        y5 = yt
         
         # 4th order solution
-        y4 = y .+ (5179*k1/57600 + 0*k2 + 7571*k3/16695 + 393*k4/640 − 92097*k5/339200 + 187*k6/2100 + k7/40)
+        y4 = y + (5179*k1/57600 + 0*k2 + 7571*k3/16695 + 393*k4/640 − 92097*k5/339200 + 187*k6/2100 + k7/40)
    
         err = abs.((y4.-y5)./2)
-        dt = s*dt*((vtol/maximum(err))^(1/5))
-
         if maximum(err) < vtol
-            yl[nx,:] = y5
-            y = y5
-        elseif  maximum(err) > vtol
-            nx = nx-1
+            yl = vcat(yl,yt)
+            y = y4
+            t = t + dt
+            tl = vcat(tl,t)
         end
+        dt = s*dt*((vtol/maximum(err))^(1/5))
     end
 
-    return yl,t
+    return yl,tl
 end
 
 function ode(mode="rkdp")

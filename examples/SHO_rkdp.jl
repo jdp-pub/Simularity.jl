@@ -17,7 +17,7 @@ function SHO(y,t,args)
     dx = z
     dz = -k/m*x
     
-    return [dx,dz]
+    return [dx dz]
 end
 
 
@@ -25,7 +25,7 @@ function main()
 
     
     # initial conditions
-    y = [1.,0.]
+    y = [1., 0.]
     
     # any arguments to pass to the function
     fargs = [1.,1.]
