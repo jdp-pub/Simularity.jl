@@ -1,5 +1,5 @@
 """
-    glrk(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::AbstractVector=[],xn::Int=100000)
+    glrk(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,s::Int=10,fargs::AbstractVector=[],xn::Int=100000)
 
 # Arguments
 - `f`: Function that describes dynamical system. 
@@ -23,7 +23,7 @@ Runge-Kutta, dynamical evolution of systems that can be cast as an array of ODEs
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
 
 """
-function glrk(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::AbstractVector=[],xn::Int=100000)
+function glrk(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,s::Int=10,fargs::AbstractVector=[],xn::Int=100000)
 
     # needs stability tests and optomization
     
@@ -75,7 +75,7 @@ function glrk(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::Int
 end
 
 """
-    glrka(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,kn::Int=10,fargs::AbstractVector=[])
+    glrka(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,kn::Int=10,fargs::AbstractVector=[])
 
 # Arguments
 - `f`: Function that describes dynamical system. 
@@ -103,7 +103,7 @@ Runge-Kutta, dynamical evolution of systems that can be cast as an array of ODEs
 
 """
 
-function glrka(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::Int=10,fargs::AbstractVector=[],xn::Int=100000)
+function glrka(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,s::Int=10,fargs::AbstractVector=[],xn::Int=100000)
     y = y0
     yt = y
     
@@ -169,7 +169,7 @@ function glrka(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,s::In
 end
 
 """
-    rk1(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+    rk1(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
 
 # Arguments
@@ -191,7 +191,7 @@ of systems that can be cast as an array of ODEs.
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
 
 """
-function rk1(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+function rk1(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
     y = y0
     yt = y
     
@@ -215,7 +215,7 @@ end
 
 
 """
-    rk2(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+    rk2(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
 
 # Arguments
@@ -237,7 +237,7 @@ as an array of ODEs.
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
 
 """
-function rk2(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+function rk2(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
     y = y0
     yt = y
@@ -268,7 +268,7 @@ end
 
 
 """
-    rk3(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+    rk3(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
 
 # Arguments
@@ -291,7 +291,7 @@ as an array of ODEs.
 
 
 """
-function rk3(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+function rk3(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
     y = y0
     yt = y
@@ -326,7 +326,7 @@ function rk3(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
 end
 
 """
-    rk4(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+    rk4(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
 
 # Arguments
@@ -348,7 +348,7 @@ as an array of ODEs.
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
 
 """
-function rk4(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+function rk4(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
     y = y0
     yt = y
@@ -382,12 +382,11 @@ function rk4(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::
         yl[nx,:] = y
     end
 
-    #
     return yl,t
 end
 
 """
-    rk45(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[])
+    rkdp(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,n::Int=1000,fargs::AbstractVector=[])
 
 
 # Arguments
@@ -397,6 +396,9 @@ end
 - `tf::Number`: End time. 
 - `n::Int`: The number of timesteps.
 - `fargs::AbstractVector`: Additional parameters to pass to f.
+- `vtol::AbstractFloat`
+- `s::AbstractFloat` Safety factor, 
+
 
 # Return 
 The time evolution of supplied parameters and the corresponding time series. 
@@ -410,87 +412,85 @@ as an array of ODEs. This method has an adaptive time step.
 
 # References
 [^list-of-runge-kutt-methods]: [List of Runge-Kutta Methods, https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods (accessed April 14, 2026).](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods)
-
+https://www.youtube.com/watch?v=6bCBXvsD7gw
 """
-function rk45(f,y0::AbstractVector,ti::Number=0,tf::Number=10,n::Int=1000,fargs::AbstractVector=[]) 
+function rkdp(f,y0::AbstractVector,ti::Number=0.,tf::Number=10.,fargs::AbstractVector=[],vtol::AbstractFloat=1E-10,s::AbstractFloat=0.9) 
 
-    yl[1,:] = y0
-
+    n = 1000000
     t = collect(range(ti,tf,n))
     dt = t[2]-t[1]
 
+    y = y0
+    yl = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    yl[1,:] = y0
 
-    # 4th order
-    yt4 = y0
-    yl4 = Array{typeof(y0[1]),2}(undef,n,length(y0))
+    k1 = typeof(y0)(undef,size(y0))
+    k2 = typeof(y0)(undef,size(y0))
+    k3 = typeof(y0)(undef,size(y0))
+    k4 = typeof(y0)(undef,size(y0))
+    k5 = typeof(y0)(undef,size(y0))
+    k6 = typeof(y0)(undef,size(y0))
+    k7 = typeof(y0)(undef,size(y0))
 
-    k14 = typeof(y0)(undef,size(y0))
-    k24 = typeof(y0)(undef,size(y0))
-    k34 = typeof(y0)(undef,size(y0))
-    k44 = typeof(y0)(undef,size(y0))
 
-    # 5th order
-    yt5 = y0
-    yl4 = Array{typeof(y0[1]),2}(undef,n,length(y0))
-
-    k15 = typeof(y0)(undef,size(y0))
-    k25 = typeof(y0)(undef,size(y0))
-    k35 = typeof(y0)(undef,size(y0))
-    k45 = typeof(y0)(undef,size(y0))
-
-    # TODO 
-    # - match dormand price coefficients
-    # - add adaptive step
     for nx in 2:n
+        k1 = f(y,t[nx],fargs).*dt
 
-        # 4th order solution
-        k14 = f(y4,t[nx],fargs).*dt
+        yt = y + k1/5
+        k2 = f(yt,t[nx]+dt/5,fargs).*dt
 
-        yt4 = y4 + k1/2
-        k24 = f(yt,t[nx]+dt/2,fargs).*dt
+        yt = y + 3*k1/40 + 9*k2/40
+        k3 = f(yt,t[nx]+3*dt/10,fargs).*dt
 
-        yt4 = y4 + k2/2
-        k34 = f(yt4,t[nx]+dt/2,fargs).*dt
+        yt = y + 44*k1/45 - 56*k2/15 + 32*k3/39
+        k4 = f(yt,t[nx]+4*dt/5,fargs).*dt
 
-        yt4 = y4 + k3
-        k44 = f(yt4,t[nx]+dt,fargs).*dt
+        yt = y + 19372*k1/6561 − 25360*k2/2187 + 64448*k3/6561 − 212*k4/729
+        k5 = f(yt,t[nx]+8*dt/9,fargs).*dt
+       
+        yt = y + 9017*k1/3168 − 355*k2/33 + 46732*k3/5247 + 49*k4/176 − 5103*k5/18656
+        k6 = f(yt,t[nx]+dt,fargs).*dt
 
-        y4 = y4 + (k14 + 2*k24 + 2*k34 + k44)/6
-        
+        yt = y + 35*k1/384 + 0*k2 + 500*k3/1113 + 125*k4/192 − 2187*k5/6784 + 11*k6/84
+        k7 = f(yt,t[nx]+dt,fargs).*dt
 
         # 5th order solution
-        k15 = f(y5,t[nx],fargs).*dt
-
+        y5 = y .+ (35*k1/384 + 0*k2 + 500*k3/1113 + 125*k4/192 − 2187*k5/6784 + 11*k6/84 + 0*k7)
         
-        yt5 = y5 + k1/2
-        k25 = f(yt5,t[nx]+dt/2,fargs).*dt
-
-        yt5 = y5 + k2/2
-        k35 = f(yt5,t[nx]+dt/2,fargs).*dt
-
-        yt5 = y5 + k3
-        k45 = f(yt5,t[nx]+dt,fargs).*dt
-
-        y5 = y5 + (k15 + 2*k25 + 2*k35 + k45)/6
+        # 4th order solution
+        y4 = y .+ (5179*k1/57600 + 0*k2 + 7571*k3/16695 + 393*k4/640 − 92097*k5/339200 + 187*k6/2100 + k7/40)
    
-        err = (y4-y5)./2
+        err = abs.((y4.-y5)./2)
+        dt = s*dt*((vtol/maximum(err))^(1/5))
 
-        if err .> 1E-8
+        if maximum(err) < vtol
+            yl[nx,:] = y5
+            y = y5
+        elseif  maximum(err) > vtol
             nx = nx-1
-            dt = dt/10
-            continue
-        elseif  err .< 1E-14
-            nx = nx-1
-            dt = dt*10
-            continue
-        else 
-            yl[nx,:] = y
         end
-
     end
 
-    
     return yl,t
 end
 
+function ode(mode="rkdp")
+    if mode == "rkdp"
+        return rkdp()
+    elseif mode == "rk4"
+        return rk4()
+    elseif mode == "glrk"
+        return glrk()
+    elseif mode == "glrka"
+        return glrka()
+    elseif mode == "rk1"
+        return rk1()
+    elseif mode == "rk23"
+        return rk23()
+    elseif mode == "rk2"
+        return rk2()
+    elseif mode == "rk3"
+        return rk3()
+    end
+end
 

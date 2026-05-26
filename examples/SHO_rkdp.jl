@@ -23,8 +23,6 @@ end
 
 function main()
 
-    # number of steps
-    n = 1000
     
     # initial conditions
     y = [1.,0.]
@@ -33,7 +31,7 @@ function main()
     fargs = [1.,1.]
     
     # compute with rk4
-    x,t = Simularity.rk4(SHO,y,0.,10.,n,fargs)
+    x,t = Simularity.rkdp(SHO,y,0.,10.,fargs)
 
     p = plot(t,x,
             label=["Position" "Velocity"],
